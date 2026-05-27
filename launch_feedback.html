@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Зворотний зв'язок · Лончі · ЮРіЯ-ФАРМ</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#F7F6F2; --surface:#FFFFFF; --border:rgba(0,0,0,.09); --border-h:rgba(0,0,0,.18);
+  --text:#1A1A18; --muted:#6B6B67; --hint:#A8A8A4;
+  --eg:#0F6E56; --eg-bg:#E1F5EE; --eg-mid:#1D9E75;
+  --er:#185FA5; --er-bg:#E6F1FB; --er-mid:#378ADD;
+  --ac:var(--eg); --ac-bg:var(--eg-bg);
+  --r:10px; --rl:14px;
+}
+[data-brand="ecto"]{--ac:var(--er);--ac-bg:var(--er-bg);}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);font-size:15px;line-height:1.6;}
+body{min-height:100vh;padding:0 0 80px;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.tl{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;}
+.tb{font-size:13px;font-weight:500;color:var(--ac);display:none;}
+.tb.vis{display:block;}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px;}
+.step0{padding:48px 0 32px;}
+.pt{font-size:26px;font-weight:300;letter-spacing:-.02em;margin-bottom:6px;}
+.ps{font-size:14px;color:var(--muted);margin-bottom:32px;}
+.bcards{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.bc{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rl);padding:20px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.bc:hover{border-color:var(--border-h);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,.06);}
+.bc.ae{border-color:var(--eg);background:var(--eg-bg);}
+.bc.ar{border-color:var(--er);background:var(--er-bg);}
+.bci{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:13px;font-weight:500;margin-bottom:12px;}
+.bci-e{background:var(--eg-bg);color:var(--eg);border:1px solid rgba(15,110,86,.15);}
+.bc.ae .bci-e{background:white;}
+.bci-r{background:var(--er-bg);color:var(--er);border:1px solid rgba(24,95,165,.15);}
+.bc.ar .bci-r{background:white;}
+.bcn{font-size:15px;font-weight:500;color:var(--text);margin-bottom:3px;}
+.bcs{font-size:12px;color:var(--muted);line-height:1.4;}
+.bck{position:absolute;top:14px;right:14px;width:20px;height:20px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:10px;color:white;}
+.bc.ae .bck{display:flex;background:var(--eg);}
+.bc.ar .bck{display:flex;background:var(--er);}
+.meta-s{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:20px;margin-bottom:24px;}
+.mg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.fl label{display:block;font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.fl input,.fl select{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);outline:none;transition:border-color .15s;}
+.fl input:focus,.fl select:focus{border-color:var(--ac);}
+.fsec{display:none;}
+.fsec.vis{display:block;}
+.bsep{display:flex;align-items:center;gap:10px;margin:32px 0 16px;}
+.bsl{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
+.bsl-ln{flex:1;height:1px;background:var(--border);}
+.qc{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:20px;margin-bottom:12px;transition:border-color .15s;}
+.qc:focus-within{border-color:var(--ac);}
+.qn{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--hint);margin-bottom:5px;}
+.qt{font-size:14px;font-weight:500;color:var(--text);line-height:1.5;margin-bottom:5px;}
+.qw{font-size:12px;color:var(--muted);background:var(--ac-bg);border-radius:6px;padding:8px 11px;margin-bottom:12px;line-height:1.6;border-left:2px solid var(--ac);}
+.qw strong{font-weight:500;color:var(--text);}
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
+.pill{cursor:pointer;padding:5px 13px;border-radius:20px;border:1px solid var(--border);font-size:12px;color:var(--muted);transition:all .15s;user-select:none;background:var(--bg);font-family:'DM Sans',sans-serif;}
+.pill:hover{border-color:var(--ac);color:var(--ac);background:var(--ac-bg);}
+.pill.on{background:var(--ac-bg);border-color:var(--ac);color:var(--ac);font-weight:500;}
+.sw{margin-bottom:10px;}
+.sr{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+.sr input[type=range]{flex:1;accent-color:var(--ac);}
+.sv{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--ac);min-width:140px;}
+.sl{display:flex;justify-content:space-between;font-size:11px;color:var(--hint);}
+.tal{font-size:12px;color:var(--muted);margin:10px 0 5px;}
+textarea{width:100%;font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);resize:vertical;min-height:68px;outline:none;line-height:1.6;transition:border-color .15s;}
+textarea:focus{border-color:var(--ac);}
+textarea.err{border-color:#E24B4A;}
+.em{font-size:12px;color:#A32D2D;margin-top:4px;display:none;}
+.subw{margin-top:32px;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);}
+.subw p{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.5;}
+.subw p strong{color:var(--text);font-weight:500;}
+.btsub{width:100%;padding:13px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:white;background:var(--ac);border:none;border-radius:10px;cursor:pointer;transition:opacity .15s;}
+.btsub:hover{opacity:.88;}
+.done{display:none;text-align:center;padding:20px;}
+.done h3{font-size:16px;font-weight:500;margin-bottom:6px;}
+.done p{font-size:13px;color:var(--muted);}
+.done-ic{font-size:36px;margin-bottom:8px;}
+.btnstart{margin-top:16px;width:100%;padding:13px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:white;background:var(--text);border:none;border-radius:10px;cursor:pointer;transition:opacity .15s;display:none;}
+.btnstart.vis{display:block;}
+.btnstart:hover{opacity:.8;}
+@media(max-width:480px){.bcards{grid-template-columns:1fr;}.mg{grid-template-columns:1fr 1fr;}.pt{font-size:22px;}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="tl">ЮРіЯ-ФАРМ · ЗЗ Лончі</span>
+  <span class="tb" id="topBrand"></span>
+</div>
+<div class="wrap">
+
+<!-- STEP 0: ВИБІР БРЕНДУ -->
+<div class="step0" id="step0">
+  <div class="pt">Зворотний зв'язок<br>по лончах</div>
+  <div class="ps">Оберіть бренд та заповніть форму. Результат надійде керівнику email-ом.</div>
+  <div class="bcards">
+    <div class="bc" id="card-e" onclick="selBrand('empathy')">
+      <div class="bci bci-e">E</div>
+      <div class="bcn">Емпаті</div>
+      <div class="bcs">Магній L-треонат<br>Розумна гідратація</div>
+      <div class="bck">✓</div>
+    </div>
+    <div class="bc" id="card-r" onclick="selBrand('ecto')">
+      <div class="bci bci-r">Ec</div>
+      <div class="bcn">Ектобріс спрей</div>
+      <div class="bcs">Ектоїн · інтраназальна<br>цитопротекція</div>
+      <div class="bck">✓</div>
+    </div>
+  </div>
+  <div class="meta-s" style="margin-top:16px">
+    <div class="mg">
+      <div class="fl"><label>РМ (прізвище ім'я)</label><input type="text" id="rm" placeholder="Горбова Олеся"></div>
+      <div class="fl"><label>Регіон</label><input type="text" id="reg" placeholder="Черкаси, Кропивницький"></div>
+      <div class="fl"><label>Місяць</label><input type="month" id="mon"></div>
+    </div>
+  </div>
+  <button class="btnstart" id="btnStart" onclick="startForm()">Перейти до питань →</button>
+</div>
+
+<!-- СЕКЦІЯ ЕМПАТІ -->
+<div class="fsec" id="sec-empathy">
+
+  <div class="bsep"><span class="bsl">Блок А · Молекула — магній L-треонат</span><div class="bsl-ln"></div></div>
+
+  <div class="qc">
+    <div class="qn">А1 · Знання молекули</div>
+    <div class="qt">МП пояснює чому магній L-треонат — єдина форма що накопичується в мозку? Як це виглядає на практиці?</div>
+    <div class="qw"><strong>Чому критично:</strong> якщо МП не продає молекулу — лікар не бачить різниці між Емпаті і Магне В6. Без механізму категорії немає.</div>
+    <div class="pills" id="ea1p">
+      <span class="pill" onclick="ps(this,'ea1p')">Пояснює ГЕБ і накопичення в мозку чітко</span>
+      <span class="pill" onclick="ps(this,'ea1p')">Каже «краща форма» — без механізму</span>
+      <span class="pill" onclick="ps(this,'ea1p')">Плутається при уточнюючих питаннях</span>
+      <span class="pill" onclick="ps(this,'ea1p')">Не акцентує на молекулі взагалі</span>
+    </div>
+    <div class="tal">Як МП формулює це лікарю — дослівно або близько</div>
+    <textarea id="ea1" placeholder="«Магній L-треонат — єдина форма що проходить ГЕБ і підвищує рівень магнію безпосередньо в мозку, тому ви отримуєте реальний ефект на когніцію»..." oninput="ce(this)"></textarea>
+    <div class="em" id="ea1e">Обов'язкове поле</div>
+  </div>
+
+  <div class="qc">
+    <div class="qn">А2 · Реакція лікаря на молекулу</div>
+    <div class="qt">Коли МП говорить про L-треонат і ГЕБ — що відбувається з лікарем?</div>
+    <div class="qw"><strong>Чому критично:</strong> реакція за спеціальністю — індикатор де потрібна освітня робота. Скептицизм невролога і сімейного лікаря мають різні причини.</div>
+    <div class="pills" id="ea2p">
+      <span class="pill" onclick="ps(this,'ea2p')">Питає деталі — «є дослідження?»</span>
+      <span class="pill" onclick="ps(this,'ea2p')">«Цікаво, не знав про таку форму»</span>
+      <span class="pill" onclick="ps(this,'ea2p')">Нейтрально — не зачіпає</span>
+      <span class="pill" onclick="ps(this,'ea2p')">Скепсис — «це маркетинг»</span>
+      <span class="pill" onclick="ps(this,'ea2p')">«Я знаю — призначаю»</span>
+    </div>
+    <div class="tal">Спеціальність + точна реакція — що сказав, що запитав</div>
+    <textarea id="ea2" placeholder="Невролог з досвідом — одразу запитав «а яке дослідження?», МП не мала під рукою — візит завис..." oninput="ce(this)"></textarea>
+    <div class="em" id="ea2e">Обов'язкове поле</div>
+  </div>
+
+  <div class="qc">
+    <div class="qn">А3 · «Інші форми не працюють на когніцію»</div>
+    <div class="qt">Аргумент «більшість форм магнію не проходять ГЕБ» — лікар приймає чи захищає те що вже призначає?</div>
+    <div class="qw"><strong>Чому критично:</strong> поданий правильно — знецінює конкурентів без прямої атаки. Поданий агресивно — псує стосунки. Нам треба знати як це відбувається в полі.</div>
+    <div class="pills" id="ea3p">
+      <span class="pill" onclick="ps(this,'ea3p')">Погоджується — бачив у практиці</span>
+      <span class="pill" onclick="ps(this,'ea3p')">«Може й так, але Магне В6 працює»</span>
+      <span class="pill" onclick="ps(this,'ea3p')">Захищає своє призначення</span>
+      <span class="pill" onclick="ps(this,'ea3p')">МП не використовує цей аргумент</span>
+    </div>
+    <div class="tal">Як МП подає аргумент і яка реакція лікаря</div>
+    <textarea id="ea3" placeholder="МП каже «цитрат і оксид не проникають в мозок» — кардіолог відповідає «ну і нічого, серцю магній дає»..." oninput="ce(this)"></textarea>
+    <div class="em" id="ea3e">Обов'язкове поле</div>
+  </div>
+
+  <div class="qc">
+    <div class="qn">А4 · 50% добової дози L-треонату в одній пляшці</div>
+    <div class="qt">МП закриває дискусію «а в Магне В6 більше мг» до того як вона починається?</div>
+    <div class="qw"><strong>Чому критично:</strong> без цього лікар думає «мало магнію — 150 мг vs 300». Це не порівняння — різні молекули з різною біодоступністю для мозку.</div>
+    <div class="pills" id="ea4p">
+      <span class="pill" onclick="ps(this,'ea4p')">Так — доносить і лікар розуміє</span>
+      <span class="pill" onclick="ps(this,'ea4p')">МП не знає цього аргументу</span>
+      <span class="pill" onclick="ps(this,'ea4p')">Знає але не використовує</span>
+      <span class="pill" onclick="ps(this,'ea4p')">Лікар все одно порівнює по мг</span>
+    </div>
+    <div class="tal">Як МП відповідає на «а в Магне В6 більше магнію»</div>
+    <textarea id="ea4" placeholder="«150 мг L-треонату — не те саме що 150 мг цитрату: тільки L-треонат потрапляє в мозок, решта виводиться»..." oninput="ce(this)"></textarea>
+    <div class="em" id="ea4e">Обов'язкове поле</div>
+  </div>
+
+  <div class="bsep"><span class="bsl">Блок Б · Категорія і позиціонування</span><div class="bsl-ln"></div></div>
+
+  <div class="qc">
+    <div class="qn">Б1 · Категорія в голові лікаря</div>
+    <div class="qt">Після візиту лікар розуміє що Емпаті — «розумна гідратація», а не вода з магнієм і не замінник таблеток?</div>
+    <div class="qw"><strong>Чому критично:</strong> якщо лікар кладе нас поруч з Магне В6 — конкуруємо на чужому полі і програємо по ціні.</div>
+    <div class="pills" id="eb1p">
+      <span class="pill" onclick="ps(this,'eb1p')">Розуміє — нова категорія</span>
+      <span class="pill" onclick="ps(this,'eb1p')">«Доповнення до магнію»</span>
+      <span class="pill" onclick="ps(this,'eb1p')">«Вода замість таблеток»</span>
+      <span class="pill" onclick="ps(this,'eb1p')">Ще не склалась картинка</span>
+    </div>
+    <div class="tal">Що каже лікар після презентації — його словами</div>
+    <textarea id="eb1" placeholder="«Окей, це не магній для серця — це для мозку, окремо»..." oninput="ce(this)"></textarea>
+    <div class="em" id="eb1e">Обов'язкове поле</div>
+  </div>
+
+  <div class="qc">
+    <div class="qn">Б2 · Без NaCl — ніша кардіо</div>
+    <div class="qt">Аргумент «не містить NaCl — безпечно для кардіологічних пацієнтів» МП доносить? Яка реакція?</div>
+    <div class="qw"><strong>Чому критично:</strong> кардіологи — окремий канал що відкриває цей аргумент. Якщо МП не використовує — втрачаємо аудиторію прописану в комзадачі.</div>
+    <div class="pills" id="eb2p">
+      <span class="pill" onclick="ps(this,'eb2p')">Доносить — кардіолог реагує позитивно</span>
+      <span class="pill" onclick="ps(this,'eb2p')">МП не акцентує цей аргумент</span>
+      <span class="pill" onclick="ps(this,'eb2p')">Не відвідує кардіологів з Емпаті</span>
+      <span class="pill" onclick="ps(this,'eb2p')">Лікар не вважає це важливим</span>
+    </div>
+    <div class="tal">Конкретна реакція кардіолога або чому МП обходить аргумент</div>
+    <textarea id="eb2" placeholder="Кардіолог: «для гіпертоніків підходить — вони і так мало п'ють»..." oninput="ce(this)"></textarea>
+    <div class="em" id="eb2e">Обов'язкове поле</div>
+  </div>
+
+  <div class="qc">
+    <div class="qn">Б3 · Щоденний формат vs курс</div>
+    <div class="qt">Лікар рекомендує Емпаті як щоденний продукт стилю життя — чи як курс на місяць?</div>
+    <div class="qw"><strong>Чому критично:</strong> «курс» = порівняння з таблетками, ціна нерозумна. «Щодня» = нова звичка, Емпаті стає частиною терапії без кінцевої дати.</div>
+    <div class="sw">
+      <div class="sr"><input type="range" min="1" max="5" value="3" step="1" id="eb3r" oninput="document.getElementById('eb3v').textContent=lb3[this.value-1]"><span class="sv" id="eb3v">Нейтрально</span></div>
+      <div class="sl"><span>«Курс 30 днів»</span><span>Нейтрально</span><span>«Щодня назавжди»</span></div>
+    </div>
+    <div class="tal">Що допомагає або заважає перевести лікаря у щоденний фрейм</div>
+    <textarea id="eb3" placeholder="Коли МП порівнює з щоденною склянкою води — лікар розуміє. Але якщо каже «курс 30 днів» — одразу питання ціни..." oninput="ce(this)"></textarea>
+    <div class="em" id="eb3e">Обов'язкове поле</div>
+  </div>
+
+  <div class="bsep"><span class="bsl">Блок В · Візит і домовленість</span><div class="bsl-ln"></div></div>
+
+  <div class="qc">
+    <div class="qn">В1 · SPIN — де лікар вмикається</div>
+    <div class="qt">На якому кроці SPIN лікар починає говорити про своїх пацієнтів, а не просто слухати МП?</div>
+    <div class="qw"><strong>Чому критично:</strong> якщо лікар не назвав проблему своїми словами — переходити до презентації зарано.</div>
+    <div class="pills" id="ev1p">
+      <span class="pill" onclick="ps(this,'ev1p')">S — одразу є контакт</span>
+      <span class="pill" onclick="ps(this,'ev1p')">P — при питанні про дефіцит магнію</span>
+      <span class="pill" onclick="ps(this,'ev1p')">I — «ефекту на когніцію немає?»</span>
+      <span class="pill" onclick="ps(this,'ev1p')">N — тільки після рішення</span>
+      <span class="pill" onclick="ps(this,'ev1p')">Не вмикається — слухає пасивно</span>
+    </div>
+    <div class="tal">Конкретна фраза або момент де лікар «переключився»</div>
+    <textarea id="ev1" placeholder="Коли МП запитала «ви бачите що після магнію ефекту на пам'ять немає?» — лікар одразу оживився..." oninput="ce(this)"></textarea>
+    <div class="em" id="ev1e">Обов'язкове поле</div>
+  </div>
+
+  <div class="qc">
+    <div class="qn">В2 · Домовленість на виході</div>
+    <div class="qt">З якою домовленістю МП виходить з кабінету?</div>
+    <div class="qw"><strong>Чому критично:</strong> ціль — рекомендація як щоденного рішення пацієнтам з когнітивним виснаженням. «Подумаю» — не домовленість.</div>
+    <div class="pills" id="ev2p">
+      <span class="pill" onclick="ps(this,'ev2p')">«Призначатиму при когнітивному виснаженні»</span>
+      <span class="pill" onclick="ps(this,'ev2p')">«Спробую на кількох пацієнтах»</span>
+      <span class="pill" onclick="ps(this,'ev2p')">«Подумаю» — без зобов'язань</span>
+      <span class="pill" onclick="ps(this,'ev2p')">МП не закриває домовленість</span>
+      <span class="pill" onclick="ps(this,'ev2p')">Відмова</span>
+    </div>
+    <div class="tal">Точна фраза лікаря або що завадило закрити</div>
+    <textarea id="ev2" placeholder="«Буду рекомендувати пацієнтам з когнітивними скаргами після 50» — або виходить без нічого..." oninput="ce(this)"></textarea>
+    <div class="em" id="ev2e">Обов'язкове поле</div>
+  </div>
+
+  <div class="qc">
+    <div class="qn">В3 · Один факап і одна перемога</div>
+    <div class="qt">Два конкретні візити: де не спрацювало і де спрацювало. Що було по-різному?</div>
+    <div class="qw"><strong>Це найцінніше що ти передаєш маркетингу.</strong> Не загальні враження — два кейси з деталями.</div>
+    <textarea id="ev3" placeholder="Факап: невролог зі стажем — «не призначаю воду», МП не знав як відповісти...&#10;&#10;Перемога: сімейний лікар — показала що немає NaCl, одразу «для моїх гіпертоніків» і взяла семпл..." style="min-height:100px" oninput="ce(this)"></textarea>
+    <div class="em" id="ev3e">Обов'язкове поле</div>
+  </div>
+
+  <div class="bsep"><span class="bsl">Блок Г · Запит до маркетингу</span><div class="bsl-ln"></div></div>
+
+  <div class="qc">
+    <div class="qn">Г1 · Один запит</div>
+    <div class="qt">Що маркетинг має зробити щоб наступного місяця команда закривала більше домовленостей? Один. Конкретно.</div>
+    <textarea id="eg1" placeholder="Картка з клінічним дослідженням по ГЕБ — одна сторінка, для неврологів-скептиків..." style="min-height:52px" oninput="ce(this)"></textarea>
+    <div class="em" id="eg1e">Обов'язкове поле</div>
+  </div>
+
+</div>
+<!-- END EMPATHY -->
+
+<!-- СЕКЦІЯ ЕКТОБРІС -->
+<div class="fsec" id="sec-ecto">
+
+  <div class="bsep"><span class="bsl">Блок А · Молекула — ектоїн і цитопротекція</span><div class="bsl-ln"></div></div>
+
+  <div class="qc">
+    <div class="qn">А1 · Механізм дії</div>
+    <div class="qt">МП пояснює що ектоїн — цитопротектор що розриває цикл запалення без втручання у біохімію клітини, а не «промивання носа»?</div>
+    <div class="qw"><strong>Чому критично:</strong> якщо МП не продає механізм Hydro Complex — лікар ставить Ектобріс поруч з Аква Маріс. Новий клас — «інтраназальна цитопротекція».</div>
+    <div class="pills" id="ra1p">
+      <span class="pill" onclick="ps(this,'ra1p')">Пояснює Hydro Complex чітко</span>
+      <span class="pill" onclick="ps(this,'ra1p')">Каже «захищає слизову» — без механізму</span>
+      <span class="pill" onclick="ps(this,'ra1p')">Плутається при уточнюючих питаннях</span>
+      <span class="pill" onclick="ps(this,'ra1p')">Не акцентує на механізмі взагалі</span>
+    </div>
+    <div class="tal">Як МП формулює механізм лікарю — дослівно або близько</div>
+    <textarea id="ra1" placeholder="«Ектоїн структурує молекули води навколо клітин, стабілізує мембрани і зупиняє запальний каскад — без гормонів і без впливу на імунну систему»..." oninput="ce(this)"></textarea>
+    <div class="em" id="ra1e">Обов'язкове поле</div>
+  </div>
+
+  <div class="qc">
+    <div class="qn">А2 · «Без втручання у біохімію» — реакція лікаря</div>
+    <div class="qt">Аргумент «діє локально, не пригнічує імунітет, можна тривало» — лікар чує це як перевагу над ГКС і антигістамінними?</div>
+    <div class="qw"><strong>Чому критично:</strong> ARIA 2024-2025 обмежила деконгестанти, ГКС мають фармобмеження. Ектобріс займає нішу без обмежень — якщо МП це доносить.</div>
+    <div class="pills" id="ra2p">
+      <span class="pill" onclick="ps(this,'ra2p')">ЛОР — «тривало без ризику, цікаво»</span>
+      <span class="pill" onclick="ps(this,'ra2p')">Алерголог — «можу додати до базової»</span>
+      <span class="pill" onclick="ps(this,'ra2p')">Педіатр — «від 2 р без обмежень, добре»</span>
+      <span class="pill" onclick="ps(this,'ra2p')">Нейтрально — не зачіпає</span>
+      <span class="pill" onclick="ps(this,'ra2p')">Скепсис — «без досліджень не вірю»</span>
+      <span class="pill" onclick="ps(this,'ra2p')">МП не доносить цей аргумент</span>
+    </div>
+    <div class="tal">Спеціальність + точна реакція лікаря</div>
+    <textarea id="ra2" placeholder="Алерголог: «можна додати до ІнГКС у пацієнтів що бояться гормонів»..." oninput="ce(this)"></textarea>
+    <div class="em" id="ra2e">Обов'язкове поле</div>
+  </div>
+
+  <div class="qc">
+    <div class="qn">А3 · Мета-аналіз: ектоїн = азеластин по TNSS (59% vs 57%)</div>
+    <div class="qt">МП використовує ці клінічні дані? Лікар сприймає як доказову базу?</div>
+    <div class="qw"><strong>Чому критично:</strong> це єдиний аргумент що переводить Ектобріс з «цікавого» в «призначаю замість антигістаміну». Без нього — тільки доповнення.</div>
+    <div class="pills" id="ra3p">
+      <span class="pill" onclick="ps(this,'ra3p')">Знає і використовує — лікар реагує</span>
+      <span class="pill" onclick="ps(this,'ra3p')">Знає але не наводить на візиті</span>
+      <span class="pill" onclick="ps(this,'ra3p')">МП не знає цих даних</span>
+      <span class="pill" onclick="ps(this,'ra3p')">Лікар запитує більше досліджень</span>
+    </div>
+    <div class="tal">Як МП подає цифри і яка реакція лікаря</div>
+    <textarea id="ra3" placeholder="ЛОР: «порівнянно з азеластином? Це сильно». Або: невролог «яка вибірка?» — МП не знав відповіді..." oninput="ce(this)"></textarea>
+    <div class="em" id="ra3e">Обов'язкове поле</div>
+  </div>
+
+  <div class="bsep"><span class="bsl">Блок Б · Позиціонування і конкурентний контекст</span><div class="bsl-ln"></div></div>
+
+  <div class="qc">
+    <div class="qn">Б1 · «Цитопротектор» — нова категорія в голові лікаря</div>
+    <div class="qt">Після візиту лікар розуміє що Ектобріс — окрема категорія, а не аналог сольового спрею чи слабший антигістамін?</div>
+    <div class="qw"><strong>Чому критично:</strong> від 1 червня промотема — «інтраназальна цитопротекція при АР». Якщо МП не формує категорію вже зараз — у червні старт буде з нуля.</div>
+    <div class="pills" id="rb1p">
+      <span class="pill" onclick="ps(this,'rb1p')">«Цитопротектор — окремий клас» ✓</span>
+      <span class="pill" onclick="ps(this,'rb1p')">«Хороший зволожуючий спрей»</span>
+      <span class="pill" onclick="ps(this,'rb1p')">«Альтернатива антигістаміну»</span>
+      <span class="pill" onclick="ps(this,'rb1p')">«Ще один назальний спрей»</span>
+      <span class="pill" onclick="ps(this,'rb1p')">Ще не склалась картинка</span>
+    </div>
+    <div class="tal">Що каже лікар після презентації — його словами</div>
+    <textarea id="rb1" placeholder="ЛОР: «окей, це не промивання — це захист епітелію, розумію різницю»..." oninput="ce(this)"></textarea>
+    <div class="em" id="rb1e">Обов'язкове поле</div>
+  </div>
+
+  <div class="qc">
+    <div class="qn">Б2 · Проти ГКС і антигістамінних</div>
+    <div class="qt">Коли лікар каже «я і так призначаю ГКС або антигістамін» — МП пояснює що Ектобріс не конкурує, а доповнює або замінює при легкій формі?</div>
+    <div class="qw"><strong>Чому критично:</strong> Ектобріс займає нішу «до» і «замість» при легких формах, і «разом» при середніх. МП має розводити, а не захищатись.</div>
+    <div class="pills" id="rb2p">
+      <span class="pill" onclick="ps(this,'rb2p')">Пояснює нішу — «доповнення або монотерапія»</span>
+      <span class="pill" onclick="ps(this,'rb2p')">Намагається замінити ГКС — і програє</span>
+      <span class="pill" onclick="ps(this,'rb2p')">Не вміє відповісти на порівняння</span>
+      <span class="pill" onclick="ps(this,'rb2p')">Лікарі поки не порівнюють активно</span>
+    </div>
+    <div class="tal">Як МП розводить Ектобріс і ГКС/антигістамін на конкретному прикладі</div>
+    <textarea id="rb2" placeholder="«ГКС — ваш стандарт при середній формі, ми не заходимо на це місце. Ектобріс — для легких або як додатковий цитопротектор»..." oninput="ce(this)"></textarea>
+    <div class="em" id="rb2e">Обов'язкове поле</div>
+  </div>
+
+  <div class="qc">
+    <div class="qn">Б3 · Канібалізація зі Снотті</div>
+    <div class="qt">Лікарі або МП плутають Ектобріс спрей зі Снотті? Як розводять?</div>
+    <div class="qw"><strong>Чому критично:</strong> Снотті — ксилітол, очищення. Ектобріс — ектоїн, цитопротекція. Якщо МП плутається — генеруємо внутрішню конкуренцію.</div>
+    <div class="pills" id="rb3p">
+      <span class="pill" onclick="ps(this,'rb3p')">МП чітко розводить — різні ніші</span>
+      <span class="pill" onclick="ps(this,'rb3p')">Лікар плутає — «чим краще ніж Снотті?»</span>
+      <span class="pill" onclick="ps(this,'rb3p')">МП сам не може пояснити різницю</span>
+      <span class="pill" onclick="ps(this,'rb3p')">Питання не виникає</span>
+    </div>
+    <div class="tal">Як МП пояснює різницю або де губиться</div>
+    <textarea id="rb3" placeholder="«Снотті — промиваєте і зволожуєте, Ектобріс — захищаєте епітелій і зупиняєте запалення. Різні ситуації»..." oninput="ce(this)"></textarea>
+    <div class="em" id="rb3e">Обов'язкове поле</div>
+  </div>
+
+  <div class="bsep"><span class="bsl">Блок В · Цільова аудиторія і сезонність</span><div class="bsl-ln"></div></div>
+
+  <div class="qc">
+    <div class="qn">В1 · Хто реагує найкраще</div>
+    <div class="qt">ЛОР, алерголог, педіатр, сімейний лікар — у кого найбільший інтерес цього місяця і що конкретно зачіпає?</div>
+    <div class="qw"><strong>Чому критично:</strong> потенціал при АР: алерголог — 500 призначень/рік, ЛОР — 230/рік. Нам важливо що спрацьовує в полі — не що написано в плані.</div>
+    <div class="pills" id="rv1p">
+      <span class="pill" onclick="ps(this,'rv1p')">ЛОР — найкраща реакція</span>
+      <span class="pill" onclick="ps(this,'rv1p')">Алерголог — найкраща реакція</span>
+      <span class="pill" onclick="ps(this,'rv1p')">Педіатр — найкраща реакція</span>
+      <span class="pill" onclick="ps(this,'rv1p')">Сімейний лікар — найкраща реакція</span>
+      <span class="pill" onclick="ps(this,'rv1p')">Однаково слабко у всіх</span>
+    </div>
+    <div class="tal">Конкретний аргумент або ситуація що зачепила</div>
+    <textarea id="rv1" placeholder="Педіатр — «від 2 років без обмежень, можна тривало» закрило заперечення по безпеці ГКС у дітей..." oninput="ce(this)"></textarea>
+    <div class="em" id="rv1e">Обов'язкове поле</div>
+  </div>
+
+  <div class="qc">
+    <div class="qn">В2 · Тайминг лончу — сезон на твоїй ділянці</div>
+    <div class="qt">Наскільки сезон алергій зараз сприяє просуванню Ектобріс спрей?</div>
+    <div class="qw"><strong>Чому критично:</strong> лонч березень 2026, сезон злакових — травень–липень, амброзія — до вересня. Якщо МП не використовує вікно — втрачаємо найкращий момент.</div>
+    <div class="sw">
+      <div class="sr"><input type="range" min="1" max="5" value="3" step="1" id="rv2r" oninput="document.getElementById('rv2v').textContent=lbSeas[this.value-1]"><span class="sv" id="rv2v">Нейтрально</span></div>
+      <div class="sl"><span>Поза сезоном</span><span>Нейтрально</span><span>Пік — ідеально</span></div>
+    </div>
+    <div class="tal">Що відбувається з алергічними пацієнтами на твоїй ділянці зараз</div>
+    <textarea id="rv2" placeholder="Сезон амброзії тільки стартує — лікарі завантажені алергіками, вікно відкрите..." oninput="ce(this)"></textarea>
+    <div class="em" id="rv2e">Обов'язкове поле</div>
+  </div>
+
+  <div class="bsep"><span class="bsl">Блок Г · Візит і домовленість</span><div class="bsl-ln"></div></div>
+
+  <div class="qc">
+    <div class="qn">Г1 · Домовленість на виході</div>
+    <div class="qt">З якою домовленістю МП виходить після візиту по Ектобріс спрей?</div>
+    <div class="qw"><strong>Чому критично:</strong> ціль — монотерапія при легкій формі АР або комбінація з базисною. «Подумаю» — не домовленість.</div>
+    <div class="pills" id="rg1p">
+      <span class="pill" onclick="ps(this,'rg1p')">«Монотерапія при легкій формі»</span>
+      <span class="pill" onclick="ps(this,'rg1p')">«Додам до ГКС чи антигістаміну»</span>
+      <span class="pill" onclick="ps(this,'rg1p')">«Спробую на кількох пацієнтах»</span>
+      <span class="pill" onclick="ps(this,'rg1p')">«Подумаю» — без зобов'язань</span>
+      <span class="pill" onclick="ps(this,'rg1p')">МП не закриває домовленість</span>
+    </div>
+    <div class="tal">Точна фраза лікаря або що завадило закрити</div>
+    <textarea id="rg1" placeholder="ЛОР: «при легкому АР де не хочу одразу ГКС — спробую Ектобріс»..." oninput="ce(this)"></textarea>
+    <div class="em" id="rg1e">Обов'язкове поле</div>
+  </div>
+
+  <div class="qc">
+    <div class="qn">Г2 · Один факап і одна перемога</div>
+    <div class="qt">Два конкретні візити: де не спрацювало і де спрацювало. Що було по-різному?</div>
+    <div class="qw"><strong>Це найцінніше що ти передаєш маркетингу.</strong> Два кейси з деталями — не загальні враження.</div>
+    <textarea id="rg2" placeholder="Факап: алерголог — «у мене є і ГКС і антигістамін», МП не зміг відповісти «коли саме»...&#10;&#10;Перемога: педіатр — після «від 2 р, без обмежень» одразу — «є в аптеці?»..." style="min-height:100px" oninput="ce(this)"></textarea>
+    <div class="em" id="rg2e">Обов'язкове поле</div>
+  </div>
+
+  <div class="qc">
+    <div class="qn">Г3 · Один запит до маркетингу</div>
+    <div class="qt">Без якого рішення наступний місяць буде складнішим? Один. Конкретно.</div>
+    <textarea id="rg3" placeholder="Репринт мета-аналізу для алергологів-скептиків. Або скрипт «коли Ектобріс замість ГКС» — одна сторінка для ЛОРів..." style="min-height:52px" oninput="ce(this)"></textarea>
+    <div class="em" id="rg3e">Обов'язкове поле</div>
+  </div>
+
+</div>
+<!-- END ECTO -->
+
+<!-- КНОПКА НАДІСЛАТИ -->
+<div class="subw" id="submitWrap" style="display:none">
+  <p>Натисни кнопку — відкриється твій поштовий клієнт з готовим листом. <strong>Тема і зміст заповняться автоматично.</strong> Просто натисни «Надіслати» у пошті.</p>
+  <button class="btsub" onclick="doSubmit()">Надіслати зворотний зв'язок →</button>
+  <div class="done" id="doneMsg">
+    <div class="done-ic">✓</div>
+    <h3>Лист відкрито у вашій пошті</h3>
+    <p>Натисніть «Надіслати» у поштовому клієнті.<br>Дякуємо за зворотний зв'язок.</p>
+  </div>
+</div>
+
+</div><!-- end wrap -->
+
+<script>
+var MGR = 'oleksii.shapravskyi@uf.ua';
+var brand = null;
+var lb3 = ['«Курс 30 днів»','Скоріше курс','Нейтрально','Скоріше щоденний','«Щодня — стиль життя»'];
+var lbSeas = ['Поза сезоном','Сезон слабкий','Нейтрально','Сезон активний','Пік — ідеально'];
+
+function selBrand(b){
+  brand=b;
+  document.getElementById('card-e').className='bc'+(b==='empathy'?' ae':'');
+  document.getElementById('card-r').className='bc'+(b==='ecto'?' ar':'');
+  document.body.setAttribute('data-brand', b==='ecto'?'ecto':'');
+  var lbl=b==='empathy'?'Емпаті':'Ектобріс спрей';
+  var tb=document.getElementById('topBrand');
+  tb.textContent=lbl; tb.className='tb vis';
+  var bs=document.getElementById('btnStart');
+  bs.className='btnstart vis';
+  bs.style.background=b==='empathy'?'var(--eg)':'var(--er)';
+}
+
+function startForm(){
+  if(!brand) return;
+  var rm=gv('rm'),reg=gv('reg'),mon=gv('mon');
+  if(!rm||!reg||!mon){alert('Заповни ім\'я РМ, регіон і місяць');return;}
+  document.getElementById('step0').style.display='none';
+  document.getElementById('sec-empathy').className='fsec'+(brand==='empathy'?' vis':'');
+  document.getElementById('sec-ecto').className='fsec'+(brand==='ecto'?' vis':'');
+  document.getElementById('submitWrap').style.display='block';
+  window.scrollTo(0,0);
+}
+
+function ps(el,g){
+  document.querySelectorAll('#'+g+' .pill').forEach(function(p){p.classList.remove('on');});
+  el.classList.add('on');
+}
+
+function ce(ta){
+  if(ta.value.trim().length>2){
+    ta.classList.remove('err');
+    var em=document.getElementById(ta.id+'e');
+    if(em) em.style.display='none';
+  }
+}
+
+function gv(id){return (document.getElementById(id)||{}).value||'';}
+function ga(id){var el=document.querySelector('#'+id+' .pill.on');return el?el.textContent.trim():'—';}
+
+function validate(ids){
+  var ok=true;
+  ids.forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el)return;
+    if(el.value.trim().length<5){
+      el.classList.add('err');
+      var em=document.getElementById(id+'e');
+      if(em) em.style.display='block';
+      ok=false;
+    }
+  });
+  return ok;
+}
+
+function buildBody(){
+  var rm=gv('rm'),reg=gv('reg'),mon=gv('mon');
+  var mp=mon?mon.split('-')[1]+'.'+mon.split('-')[0]:mon;
+  if(brand==='empathy'){
+    var sc=document.getElementById('eb3r')?document.getElementById('eb3r').value:'3';
+    return [
+      'ЗВОРОТНИЙ ЗВ\'ЯЗОК ПО ЛОНЧУ — ЕМПАТІ',
+      'РМ: '+rm+' | Регіон: '+reg+' | Місяць: '+mp,'',
+      '=== БЛОК А · МОЛЕКУЛА — МАГНІЙ L-ТРЕОНАТ ===','',
+      'А1 · Знання молекули МП','  Оцінка: '+ga('ea1p'),'  Деталі: '+gv('ea1'),'',
+      'А2 · Реакція лікаря на молекулу','  Оцінка: '+ga('ea2p'),'  Деталі: '+gv('ea2'),'',
+      'А3 · Аргумент про неефективність інших форм','  Оцінка: '+ga('ea3p'),'  Деталі: '+gv('ea3'),'',
+      'А4 · 50% добової дози L-треонату','  Оцінка: '+ga('ea4p'),'  Деталі: '+gv('ea4'),'',
+      '=== БЛОК Б · КАТЕГОРІЯ І ПОЗИЦІОНУВАННЯ ===','',
+      'Б1 · Категорія в голові лікаря','  Оцінка: '+ga('eb1p'),'  Деталі: '+gv('eb1'),'',
+      'Б2 · Аргумент без NaCl для кардіологів','  Оцінка: '+ga('eb2p'),'  Деталі: '+gv('eb2'),'',
+      'Б3 · Щоденний формат vs курс','  Шкала: '+lb3[parseInt(sc)-1],'  Деталі: '+gv('eb3'),'',
+      '=== БЛОК В · ВІЗИТ І ДОМОВЛЕНІСТЬ ===','',
+      'В1 · SPIN — де лікар вмикається','  Оцінка: '+ga('ev1p'),'  Деталі: '+gv('ev1'),'',
+      'В2 · Домовленість на виході','  Оцінка: '+ga('ev2p'),'  Деталі: '+gv('ev2'),'',
+      'В3 · Факап і перемога місяця','  '+gv('ev3'),'',
+      '=== БЛОК Г · ЗАПИТ ДО МАРКЕТИНГУ ===','',
+      gv('eg1'),'',
+      '---','Надіслано: '+new Date().toLocaleString('uk-UA')
+    ].join('\n');
+  } else {
+    var sc2=document.getElementById('rv2r')?document.getElementById('rv2r').value:'3';
+    return [
+      'ЗВОРОТНИЙ ЗВ\'ЯЗОК ПО ЛОНЧУ — ЕКТОБРІС СПРЕЙ',
+      'РМ: '+rm+' | Регіон: '+reg+' | Місяць: '+mp,'',
+      '=== БЛОК А · МОЛЕКУЛА — ЕКТОЇН І ЦИТОПРОТЕКЦІЯ ===','',
+      'А1 · Механізм дії — Hydro Complex','  Оцінка: '+ga('ra1p'),'  Деталі: '+gv('ra1'),'',
+      'А2 · «Без втручання у біохімію» — реакція лікаря','  Оцінка: '+ga('ra2p'),'  Деталі: '+gv('ra2'),'',
+      'А3 · Мета-аналіз ектоїн = азеластин TNSS 59% vs 57%','  Оцінка: '+ga('ra3p'),'  Деталі: '+gv('ra3'),'',
+      '=== БЛОК Б · ПОЗИЦІОНУВАННЯ І КОНКУРЕНТИ ===','',
+      'Б1 · Категорія «цитопротектор» в голові лікаря','  Оцінка: '+ga('rb1p'),'  Деталі: '+gv('rb1'),'',
+      'Б2 · Розведення з ГКС і антигістамінними','  Оцінка: '+ga('rb2p'),'  Деталі: '+gv('rb2'),'',
+      'Б3 · Канібалізація зі Снотті','  Оцінка: '+ga('rb3p'),'  Деталі: '+gv('rb3'),'',
+      '=== БЛОК В · ЦІЛЬОВА АУДИТОРІЯ І СЕЗОННІСТЬ ===','',
+      'В1 · Спеціальність з найкращою реакцією','  Оцінка: '+ga('rv1p'),'  Деталі: '+gv('rv1'),'',
+      'В2 · Тайминг лончу','  Шкала: '+lbSeas[parseInt(sc2)-1],'  Деталі: '+gv('rv2'),'',
+      '=== БЛОК Г · ВІЗИТ І ДОМОВЛЕНІСТЬ ===','',
+      'Г1 · Домовленість на виході','  Оцінка: '+ga('rg1p'),'  Деталі: '+gv('rg1'),'',
+      'Г2 · Факап і перемога місяця','  '+gv('rg2'),'',
+      'Г3 · Запит до маркетингу','  '+gv('rg3'),'',
+      '---','Надіслано: '+new Date().toLocaleString('uk-UA')
+    ].join('\n');
+  }
+}
+
+function doSubmit(){
+  var ids = brand==='empathy'
+    ? ['ea1','ea2','ea3','ea4','eb1','eb2','eb3','ev1','ev2','ev3','eg1']
+    : ['ra1','ra2','ra3','rb1','rb2','rb3','rv1','rv2','rg1','rg2','rg3'];
+  if(!validate(ids)){
+    var first=document.querySelector('textarea.err');
+    if(first) first.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  var rm=gv('rm'),reg=gv('reg'),mon=gv('mon');
+  var mp=mon?mon.split('-')[1]+'.'+mon.split('-')[0]:mon;
+  var bn=brand==='empathy'?'Емпаті':'Ектобріс спрей';
+  var subj=encodeURIComponent('ЗЗ Лонч · '+bn+' · '+rm+' · '+reg+' · '+mp);
+  var body=encodeURIComponent(buildBody());
+  window.location.href='mailto:'+MGR+'?subject='+subj+'&body='+body;
+  document.querySelector('.btsub').style.display='none';
+  document.getElementById('doneMsg').style.display='block';
+}
+</script>
+</body>
+</html>
