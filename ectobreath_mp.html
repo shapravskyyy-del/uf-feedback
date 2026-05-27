@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ектобріс спрей · Чекліст МП · ЮРіЯ-ФАРМ</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F6F2;--surface:#FFFFFF;--border:rgba(0,0,0,.09);--text:#1A1A18;--muted:#6B6B67;--hint:#A8A8A4;--ac:#185FA5;--ac-bg:#E6F1FB;--r:10px;--rl:14px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);font-size:15px;line-height:1.6;}
+body{min-height:100vh;padding:0 0 80px;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.tl{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;}
+.tb{font-size:13px;font-weight:500;color:var(--ac);}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px;}
+.hero{padding:40px 0 28px;}
+.hero-icon{width:48px;height:48px;border-radius:12px;background:var(--ac-bg);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:15px;font-weight:500;color:var(--ac);margin-bottom:16px;border:1px solid rgba(24,95,165,.15);}
+.hero h1{font-size:24px;font-weight:300;letter-spacing:-.02em;margin-bottom:4px;}
+.hero p{font-size:13px;color:var(--muted);}
+.bsep{display:flex;align-items:center;gap:10px;margin:28px 0 14px;}
+.bsl{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
+.bsl-ln{flex:1;height:1px;background:var(--border);}
+.qc{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:20px;margin-bottom:10px;}
+.qn{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--hint);margin-bottom:6px;}
+.qt{font-size:14px;font-weight:500;color:var(--text);line-height:1.5;margin-bottom:14px;}
+.pills{display:flex;flex-wrap:wrap;gap:6px;}
+.pill{cursor:pointer;padding:6px 14px;border-radius:20px;border:1px solid var(--border);font-size:13px;color:var(--muted);transition:all .15s;user-select:none;background:var(--bg);}
+.pill:hover{border-color:var(--ac);color:var(--ac);background:var(--ac-bg);}
+.pill.on{background:var(--ac-bg);border-color:var(--ac);color:var(--ac);font-weight:500;}
+.progress-wrap{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:14px;}
+.progress-bar{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--ac);border-radius:2px;transition:width .3s;}
+.progress-txt{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
+.done-banner{display:none;background:var(--ac-bg);border:1px solid var(--ac);border-radius:var(--rl);padding:16px 20px;text-align:center;margin-top:20px;}
+.done-banner h3{font-size:15px;font-weight:500;color:var(--ac);margin-bottom:4px;}
+.done-banner p{font-size:13px;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="tl">ЮРіЯ-ФАРМ · МП</span>
+  <span class="tb">Ектобріс спрей · Респіраторний</span>
+</div>
+<div class="wrap">
+<div class="hero">
+  <div class="hero-icon">Ec</div>
+  <h1>Ектобріс спрей — чекліст МП</h1>
+  <p>Ектоїн · Інтраназальна цитопротекція · Респіраторний напрямок</p>
+</div>
+
+<div class="bsep"><span class="bsl">Блок А · Молекула — ектоїн і цитопротекція</span><div class="bsl-ln"></div></div>
+
+<div class="qc">
+  <div class="qn">А1 · Механізм дії</div>
+  <div class="qt">Як я пояснюю лікарю що ектоїн — цитопротектор що розриває цикл запалення без втручання у біохімію клітини?</div>
+  <div class="pills" id="ra1">
+    <span class="pill" onclick="tp(this,'ra1')">Пояснюю Hydro Complex чітко</span>
+    <span class="pill" onclick="tp(this,'ra1')">Кажу «захищає слизову» — без механізму</span>
+    <span class="pill" onclick="tp(this,'ra1')">Плутаюсь при уточнюючих питаннях</span>
+    <span class="pill" onclick="tp(this,'ra1')">Не акцентую на механізмі</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn">А2 · «Без втручання у біохімію» — реакція лікаря</div>
+  <div class="qt">Як лікар реагує на аргумент «діє локально, не пригнічує імунітет, можна тривало»?</div>
+  <div class="pills" id="ra2">
+    <span class="pill" onclick="tp(this,'ra2')">ЛОР — «тривало без ризику, цікаво»</span>
+    <span class="pill" onclick="tp(this,'ra2')">Алерголог — «можу додати до базової»</span>
+    <span class="pill" onclick="tp(this,'ra2')">Педіатр — «від 2 р без обмежень, добре»</span>
+    <span class="pill" onclick="tp(this,'ra2')">Нейтрально — не зачіпає</span>
+    <span class="pill" onclick="tp(this,'ra2')">Скепсис — «без досліджень не вірю»</span>
+    <span class="pill" onclick="tp(this,'ra2')">Не доношу цей аргумент</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn">А3 · Мета-аналіз: ектоїн = азеластин по TNSS (59% vs 57%)</div>
+  <div class="qt">Чи використовую я ці клінічні дані на візиті?</div>
+  <div class="pills" id="ra3">
+    <span class="pill" onclick="tp(this,'ra3')">Знаю і використовую — лікар реагує</span>
+    <span class="pill" onclick="tp(this,'ra3')">Знаю але не наводжу на візиті</span>
+    <span class="pill" onclick="tp(this,'ra3')">Не знаю цих даних</span>
+    <span class="pill" onclick="tp(this,'ra3')">Лікар запитує більше досліджень</span>
+  </div>
+</div>
+
+<div class="bsep"><span class="bsl">Блок Б · Позиціонування і конкуренти</span><div class="bsl-ln"></div></div>
+
+<div class="qc">
+  <div class="qn">Б1 · «Цитопротектор» — нова категорія</div>
+  <div class="qt">Після мого візиту лікар розуміє що Ектобріс — окрема категорія, а не аналог сольового спрею?</div>
+  <div class="pills" id="rb1">
+    <span class="pill" onclick="tp(this,'rb1')">«Цитопротектор — окремий клас» ✓</span>
+    <span class="pill" onclick="tp(this,'rb1')">«Хороший зволожуючий спрей»</span>
+    <span class="pill" onclick="tp(this,'rb1')">«Альтернатива антигістаміну»</span>
+    <span class="pill" onclick="tp(this,'rb1')">«Ще один назальний спрей»</span>
+    <span class="pill" onclick="tp(this,'rb1')">Ще не склалась картинка</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn">Б2 · Проти ГКС і антигістамінних</div>
+  <div class="qt">Коли лікар каже «я і так призначаю ГКС або антигістамін» — як я відповідаю?</div>
+  <div class="pills" id="rb2">
+    <span class="pill" onclick="tp(this,'rb2')">Пояснюю нішу — «доповнення або монотерапія» ✓</span>
+    <span class="pill" onclick="tp(this,'rb2')">Намагаюсь замінити ГКС — і програю</span>
+    <span class="pill" onclick="tp(this,'rb2')">Не вмію відповісти на порівняння</span>
+    <span class="pill" onclick="tp(this,'rb2')">Лікарі поки не порівнюють</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn">Б3 · Канібалізація зі Снотті</div>
+  <div class="qt">Чи вмію я розвести Ектобріс і Снотті як різні продукти для різних ситуацій?</div>
+  <div class="pills" id="rb3">
+    <span class="pill" onclick="tp(this,'rb3')">Чітко розводжу — різні ніші ✓</span>
+    <span class="pill" onclick="tp(this,'rb3')">Лікар плутає — «чим краще ніж Снотті?»</span>
+    <span class="pill" onclick="tp(this,'rb3')">Сам не можу пояснити різницю</span>
+    <span class="pill" onclick="tp(this,'rb3')">Питання не виникає</span>
+  </div>
+</div>
+
+<div class="bsep"><span class="bsl">Блок В · Цільова аудиторія і сезонність</span><div class="bsl-ln"></div></div>
+
+<div class="qc">
+  <div class="qn">В1 · Хто реагує найкраще</div>
+  <div class="qt">У кого з лікарів найбільший інтерес до Ектобріс спрей цього місяця?</div>
+  <div class="pills" id="rv1">
+    <span class="pill" onclick="tp(this,'rv1')">ЛОР</span>
+    <span class="pill" onclick="tp(this,'rv1')">Алерголог</span>
+    <span class="pill" onclick="tp(this,'rv1')">Педіатр</span>
+    <span class="pill" onclick="tp(this,'rv1')">Сімейний лікар</span>
+    <span class="pill" onclick="tp(this,'rv1')">Однаково слабко у всіх</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn">В2 · Тайминг — сезон на моїй ділянці</div>
+  <div class="qt">Наскільки сезон алергій зараз сприяє просуванню Ектобріс спрей?</div>
+  <div class="pills" id="rv2">
+    <span class="pill" onclick="tp(this,'rv2')">Пік сезону — ідеальний момент ✓</span>
+    <span class="pill" onclick="tp(this,'rv2')">Сезон активний</span>
+    <span class="pill" onclick="tp(this,'rv2')">Нейтрально</span>
+    <span class="pill" onclick="tp(this,'rv2')">Сезон слабкий</span>
+    <span class="pill" onclick="tp(this,'rv2')">Поза сезоном</span>
+  </div>
+</div>
+
+<div class="bsep"><span class="bsl">Блок Г · Домовленість</span><div class="bsl-ln"></div></div>
+
+<div class="qc">
+  <div class="qn">Г1 · Домовленість на виході</div>
+  <div class="qt">З якою домовленістю я виходжу після візиту по Ектобріс спрей?</div>
+  <div class="pills" id="rg1">
+    <span class="pill" onclick="tp(this,'rg1')">«Монотерапія при легкій формі» ✓</span>
+    <span class="pill" onclick="tp(this,'rg1')">«Додам до ГКС чи антигістаміну» ✓</span>
+    <span class="pill" onclick="tp(this,'rg1')">«Спробую на кількох пацієнтах»</span>
+    <span class="pill" onclick="tp(this,'rg1')">«Подумаю» — без зобов'язань</span>
+    <span class="pill" onclick="tp(this,'rg1')">Не закриваю домовленість</span>
+  </div>
+</div>
+
+<div id="done-banner" class="done-banner">
+  <h3>Чекліст заповнено ✓</h3>
+  <p>Збережи свої відповіді або зроби скріншот.</p>
+</div>
+
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+  <span class="progress-txt" id="prog-txt">0 / 9</span>
+</div>
+
+<script>
+var total=9;
+var answered={};
+function tp(el,g){
+  document.querySelectorAll('#'+g+' .pill').forEach(function(p){p.classList.remove('on');});
+  el.classList.add('on');
+  answered[g]=true;
+  updateProgress();
+}
+function updateProgress(){
+  var n=Object.keys(answered).length;
+  document.getElementById('prog').style.width=(n/total*100)+'%';
+  document.getElementById('prog-txt').textContent=n+' / '+total;
+  if(n===total) document.getElementById('done-banner').style.display='block';
+}
+</script>
+</body>
+</html>

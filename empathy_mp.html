@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Емпаті · Чекліст МП · ЮРіЯ-ФАРМ</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F6F2;--surface:#FFFFFF;--border:rgba(0,0,0,.09);--text:#1A1A18;--muted:#6B6B67;--hint:#A8A8A4;--ac:#0F6E56;--ac-bg:#E1F5EE;--r:10px;--rl:14px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);font-size:15px;line-height:1.6;}
+body{min-height:100vh;padding:0 0 80px;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.tl{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;}
+.tb{font-size:13px;font-weight:500;color:var(--ac);}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px;}
+.hero{padding:40px 0 28px;}
+.hero-icon{width:48px;height:48px;border-radius:12px;background:var(--ac-bg);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:18px;font-weight:500;color:var(--ac);margin-bottom:16px;border:1px solid rgba(15,110,86,.15);}
+.hero h1{font-size:24px;font-weight:300;letter-spacing:-.02em;margin-bottom:4px;}
+.hero p{font-size:13px;color:var(--muted);}
+.bsep{display:flex;align-items:center;gap:10px;margin:28px 0 14px;}
+.bsl{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
+.bsl-ln{flex:1;height:1px;background:var(--border);}
+.qc{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:20px;margin-bottom:10px;}
+.qn{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--hint);margin-bottom:6px;}
+.qt{font-size:14px;font-weight:500;color:var(--text);line-height:1.5;margin-bottom:14px;}
+.pills{display:flex;flex-wrap:wrap;gap:6px;}
+.pill{cursor:pointer;padding:6px 14px;border-radius:20px;border:1px solid var(--border);font-size:13px;color:var(--muted);transition:all .15s;user-select:none;background:var(--bg);}
+.pill:hover{border-color:var(--ac);color:var(--ac);background:var(--ac-bg);}
+.pill.on{background:var(--ac-bg);border-color:var(--ac);color:var(--ac);font-weight:500;}
+.progress-wrap{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:14px;}
+.progress-bar{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--ac);border-radius:2px;transition:width .3s;}
+.progress-txt{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
+.done-banner{display:none;background:var(--ac-bg);border:1px solid var(--ac);border-radius:var(--rl);padding:16px 20px;text-align:center;margin-top:20px;}
+.done-banner h3{font-size:15px;font-weight:500;color:var(--ac);margin-bottom:4px;}
+.done-banner p{font-size:13px;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="tl">ЮРіЯ-ФАРМ · МП</span>
+  <span class="tb">Емпаті · Терапевтичний</span>
+</div>
+<div class="wrap">
+<div class="hero">
+  <div class="hero-icon">E</div>
+  <h1>Емпаті — чекліст МП</h1>
+  <p>Магній L-треонат · Розумна гідратація · Терапевтичний напрямок</p>
+</div>
+
+<div class="bsep"><span class="bsl">Блок А · Молекула — магній L-треонат</span><div class="bsl-ln"></div></div>
+
+<div class="qc">
+  <div class="qn">А1 · Знання молекули</div>
+  <div class="qt">Як я пояснюю лікарю чому магній L-треонат — єдина форма що накопичується в мозку?</div>
+  <div class="pills" id="ea1">
+    <span class="pill" onclick="tp(this,'ea1')">Пояснюю ГЕБ і накопичення в мозку чітко</span>
+    <span class="pill" onclick="tp(this,'ea1')">Кажу «краща форма» — без механізму</span>
+    <span class="pill" onclick="tp(this,'ea1')">Плутаюсь при уточнюючих питаннях</span>
+    <span class="pill" onclick="tp(this,'ea1')">Не акцентую на молекулі</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn">А2 · Реакція лікаря на молекулу</div>
+  <div class="qt">Як лікар реагує коли я говорю про L-треонат і ГЕБ?</div>
+  <div class="pills" id="ea2">
+    <span class="pill" onclick="tp(this,'ea2')">Питає деталі — «є дослідження?»</span>
+    <span class="pill" onclick="tp(this,'ea2')">«Цікаво, не знав про таку форму»</span>
+    <span class="pill" onclick="tp(this,'ea2')">Нейтрально — не зачіпає</span>
+    <span class="pill" onclick="tp(this,'ea2')">Скепсис — «це маркетинг»</span>
+    <span class="pill" onclick="tp(this,'ea2')">«Я знаю — призначаю»</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn">А3 · Аргумент про інші форми магнію</div>
+  <div class="qt">Як лікар реагує на аргумент «більшість форм магнію не проходять ГЕБ»?</div>
+  <div class="pills" id="ea3">
+    <span class="pill" onclick="tp(this,'ea3')">Погоджується — бачив у практиці</span>
+    <span class="pill" onclick="tp(this,'ea3')">«Може й так, але Магне В6 працює»</span>
+    <span class="pill" onclick="tp(this,'ea3')">Захищає своє призначення</span>
+    <span class="pill" onclick="tp(this,'ea3')">Я не використовую цей аргумент</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn">А4 · 50% добової дози в одній пляшці</div>
+  <div class="qt">Чи закриваю я дискусію «а в Магне В6 більше мг» до того як вона починається?</div>
+  <div class="pills" id="ea4">
+    <span class="pill" onclick="tp(this,'ea4')">Так — доношу і лікар розуміє</span>
+    <span class="pill" onclick="tp(this,'ea4')">Не знаю цього аргументу</span>
+    <span class="pill" onclick="tp(this,'ea4')">Знаю але не використовую</span>
+    <span class="pill" onclick="tp(this,'ea4')">Лікар все одно порівнює по мг</span>
+  </div>
+</div>
+
+<div class="bsep"><span class="bsl">Блок Б · Категорія і позиціонування</span><div class="bsl-ln"></div></div>
+
+<div class="qc">
+  <div class="qn">Б1 · Категорія в голові лікаря</div>
+  <div class="qt">Після мого візиту лікар розуміє що Емпаті — «розумна гідратація», а не вода з магнієм?</div>
+  <div class="pills" id="eb1">
+    <span class="pill" onclick="tp(this,'eb1')">Розуміє — нова категорія</span>
+    <span class="pill" onclick="tp(this,'eb1')">«Доповнення до магнію»</span>
+    <span class="pill" onclick="tp(this,'eb1')">«Вода замість таблеток»</span>
+    <span class="pill" onclick="tp(this,'eb1')">Ще не склалась картинка</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn">Б2 · Без NaCl — ніша кардіо</div>
+  <div class="qt">Чи доношу я аргумент «не містить NaCl — безпечно для кардіологічних пацієнтів»?</div>
+  <div class="pills" id="eb2">
+    <span class="pill" onclick="tp(this,'eb2')">Доношу — кардіолог реагує позитивно</span>
+    <span class="pill" onclick="tp(this,'eb2')">Не акцентую цей аргумент</span>
+    <span class="pill" onclick="tp(this,'eb2')">Не відвідую кардіологів з Емпаті</span>
+    <span class="pill" onclick="tp(this,'eb2')">Лікар не вважає це важливим</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn">Б3 · Щоденний формат vs курс</div>
+  <div class="qt">Як лікар рекомендує Емпаті — як щоденний продукт чи як курс?</div>
+  <div class="pills" id="eb3">
+    <span class="pill" onclick="tp(this,'eb3')">«Щодня — стиль життя» ✓</span>
+    <span class="pill" onclick="tp(this,'eb3')">«Курс 30 днів»</span>
+    <span class="pill" onclick="tp(this,'eb3')">Нейтрально</span>
+    <span class="pill" onclick="tp(this,'eb3')">Ще не рекомендує</span>
+  </div>
+</div>
+
+<div class="bsep"><span class="bsl">Блок В · Візит і домовленість</span><div class="bsl-ln"></div></div>
+
+<div class="qc">
+  <div class="qn">В1 · SPIN — де лікар вмикається</div>
+  <div class="qt">На якому кроці лікар починає говорити про своїх пацієнтів, а не просто слухати?</div>
+  <div class="pills" id="ev1">
+    <span class="pill" onclick="tp(this,'ev1')">S — одразу є контакт</span>
+    <span class="pill" onclick="tp(this,'ev1')">P — при питанні про дефіцит магнію</span>
+    <span class="pill" onclick="tp(this,'ev1')">I — «ефекту на когніцію немає?»</span>
+    <span class="pill" onclick="tp(this,'ev1')">N — тільки після рішення</span>
+    <span class="pill" onclick="tp(this,'ev1')">Не вмикається</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn">В2 · Домовленість на виході</div>
+  <div class="qt">З якою домовленістю я виходжу з кабінету після візиту по Емпаті?</div>
+  <div class="pills" id="ev2">
+    <span class="pill" onclick="tp(this,'ev2')">«Призначатиму при когнітивному виснаженні» ✓</span>
+    <span class="pill" onclick="tp(this,'ev2')">«Спробую на кількох пацієнтах»</span>
+    <span class="pill" onclick="tp(this,'ev2')">«Подумаю» — без зобов'язань</span>
+    <span class="pill" onclick="tp(this,'ev2')">Не закриваю домовленість</span>
+    <span class="pill" onclick="tp(this,'ev2')">Відмова</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn">В3 · Конкурентне порівняння</div>
+  <div class="qt">Коли лікар порівнює Емпаті з таблетованим магнієм — як я відповідаю?</div>
+  <div class="pills" id="ev3">
+    <span class="pill" onclick="tp(this,'ev3')">Утримую категорійний аргумент ✓</span>
+    <span class="pill" onclick="tp(this,'ev3')">Іноді порівнюю по мг — і губжу позицію</span>
+    <span class="pill" onclick="tp(this,'ev3')">Не вмію вийти з порівняння</span>
+    <span class="pill" onclick="tp(this,'ev3')">Лікарі поки не порівнюють</span>
+  </div>
+</div>
+
+<div id="done-banner" class="done-banner">
+  <h3>Чекліст заповнено ✓</h3>
+  <p>Збережи свої відповіді або зроби скріншот.</p>
+</div>
+
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+  <span class="progress-txt" id="prog-txt">0 / 9</span>
+</div>
+
+<script>
+var total=9;
+var answered={};
+function tp(el,g){
+  document.querySelectorAll('#'+g+' .pill').forEach(function(p){p.classList.remove('on');});
+  el.classList.add('on');
+  answered[g]=true;
+  updateProgress();
+}
+function updateProgress(){
+  var n=Object.keys(answered).length;
+  document.getElementById('prog').style.width=(n/total*100)+'%';
+  document.getElementById('prog-txt').textContent=n+' / '+total;
+  if(n===total) document.getElementById('done-banner').style.display='block';
+}
+</script>
+</body>
+</html>
