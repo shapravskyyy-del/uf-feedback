@@ -6,10 +6,10 @@
 <title>Емпаті · Чекліст МП · ЮРіЯ-ФАРМ</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F7F6F2;--surface:#FFFFFF;--border:rgba(0,0,0,.09);--text:#1A1A18;--muted:#6B6B67;--hint:#A8A8A4;--ac:#0F6E56;--ac-bg:#E1F5EE;--r:10px;--rl:14px;}
+:root{--bg:#F7F6F2;--surface:#FFFFFF;--border:rgba(0,0,0,.09);--text:#1A1A18;--muted:#6B6B67;--hint:#A8A8A4;--ac:#0F6E56;--ac-bg:#E1F5EE;--rl:14px;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);font-size:15px;line-height:1.6;}
-body{min-height:100vh;padding:0 0 80px;}
+body{min-height:100vh;padding:0 0 60px;}
 .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
 .tl{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;}
 .tb{font-size:13px;font-weight:500;color:var(--ac);}
@@ -21,18 +21,22 @@ body{min-height:100vh;padding:0 0 80px;}
 .bsep{display:flex;align-items:center;gap:10px;margin:28px 0 14px;}
 .bsl{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
 .bsl-ln{flex:1;height:1px;background:var(--border);}
-.qc{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:20px;margin-bottom:10px;}
-.qn{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--hint);margin-bottom:6px;}
-.qt{font-size:14px;font-weight:500;color:var(--text);line-height:1.5;margin-bottom:14px;}
-.pills{display:flex;flex-wrap:wrap;gap:6px;}
-.pill{cursor:pointer;padding:6px 14px;border-radius:20px;border:1px solid var(--border);font-size:13px;color:var(--muted);transition:all .15s;user-select:none;background:var(--bg);}
-.pill:hover{border-color:var(--ac);color:var(--ac);background:var(--ac-bg);}
-.pill.on{background:var(--ac-bg);border-color:var(--ac);color:var(--ac);font-weight:500;}
-.progress-wrap{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:14px;}
+.qc{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:20px;margin-bottom:10px;display:flex;align-items:flex-start;gap:16px;cursor:pointer;transition:border-color .15s;}
+.qc:hover{border-color:rgba(0,0,0,.18);}
+.qc.done{border-color:var(--ac);background:var(--ac-bg);}
+.qcheck{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:all .15s;font-size:11px;color:transparent;}
+.qc.done .qcheck{background:var(--ac);border-color:var(--ac);color:white;}
+.qbody{flex:1;}
+.qn{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--hint);margin-bottom:5px;}
+.qc.done .qn{color:var(--ac);opacity:.7;}
+.qt{font-size:14px;font-weight:500;color:var(--text);line-height:1.5;}
+.qc.done .qt{color:var(--ac);}
+.progress-wrap{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:14px;}
 .progress-bar{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
 .progress-fill{height:100%;background:var(--ac);border-radius:2px;transition:width .3s;}
 .progress-txt{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
-.done-banner{display:none;background:var(--ac-bg);border:1px solid var(--ac);border-radius:var(--rl);padding:16px 20px;text-align:center;margin-top:20px;}
+.hint{font-size:12px;color:var(--muted);text-align:center;padding:12px 0 4px;}
+.done-banner{display:none;background:var(--ac-bg);border:1px solid var(--ac);border-radius:var(--rl);padding:16px 20px;text-align:center;margin-top:16px;}
 .done-banner h3{font-size:15px;font-weight:500;color:var(--ac);margin-bottom:4px;}
 .done-banner p{font-size:13px;color:var(--muted);}
 </style>
@@ -48,131 +52,98 @@ body{min-height:100vh;padding:0 0 80px;}
   <h1>Емпаті — чекліст МП</h1>
   <p>Магній L-треонат · Розумна гідратація · Терапевтичний напрямок</p>
 </div>
+<p class="hint">Натисни на питання коли відповів на нього для себе</p>
 
 <div class="bsep"><span class="bsl">Блок А · Молекула — магній L-треонат</span><div class="bsl-ln"></div></div>
 
-<div class="qc">
-  <div class="qn">А1 · Знання молекули</div>
-  <div class="qt">Як я пояснюю лікарю чому магній L-треонат — єдина форма що накопичується в мозку?</div>
-  <div class="pills" id="ea1">
-    <span class="pill" onclick="tp(this,'ea1')">Пояснюю ГЕБ і накопичення в мозку чітко</span>
-    <span class="pill" onclick="tp(this,'ea1')">Кажу «краща форма» — без механізму</span>
-    <span class="pill" onclick="tp(this,'ea1')">Плутаюсь при уточнюючих питаннях</span>
-    <span class="pill" onclick="tp(this,'ea1')">Не акцентую на молекулі</span>
+<div class="qc" onclick="toggle(this)">
+  <div class="qcheck">✓</div>
+  <div class="qbody">
+    <div class="qn">А1 · Знання молекули</div>
+    <div class="qt">Як я пояснюю лікарю чому магній L-треонат — єдина форма що накопичується в мозку? Чи вмію відтворити це одним реченням без CLM?</div>
   </div>
 </div>
 
-<div class="qc">
-  <div class="qn">А2 · Реакція лікаря на молекулу</div>
-  <div class="qt">Як лікар реагує коли я говорю про L-треонат і ГЕБ?</div>
-  <div class="pills" id="ea2">
-    <span class="pill" onclick="tp(this,'ea2')">Питає деталі — «є дослідження?»</span>
-    <span class="pill" onclick="tp(this,'ea2')">«Цікаво, не знав про таку форму»</span>
-    <span class="pill" onclick="tp(this,'ea2')">Нейтрально — не зачіпає</span>
-    <span class="pill" onclick="tp(this,'ea2')">Скепсис — «це маркетинг»</span>
-    <span class="pill" onclick="tp(this,'ea2')">«Я знаю — призначаю»</span>
+<div class="qc" onclick="toggle(this)">
+  <div class="qcheck">✓</div>
+  <div class="qbody">
+    <div class="qn">А2 · Реакція лікаря на молекулу</div>
+    <div class="qt">Яка реакція лікаря коли я говорю про L-треонат і ГЕБ? Чи є у мене відповідь на скептика?</div>
   </div>
 </div>
 
-<div class="qc">
-  <div class="qn">А3 · Аргумент про інші форми магнію</div>
-  <div class="qt">Як лікар реагує на аргумент «більшість форм магнію не проходять ГЕБ»?</div>
-  <div class="pills" id="ea3">
-    <span class="pill" onclick="tp(this,'ea3')">Погоджується — бачив у практиці</span>
-    <span class="pill" onclick="tp(this,'ea3')">«Може й так, але Магне В6 працює»</span>
-    <span class="pill" onclick="tp(this,'ea3')">Захищає своє призначення</span>
-    <span class="pill" onclick="tp(this,'ea3')">Я не використовую цей аргумент</span>
+<div class="qc" onclick="toggle(this)">
+  <div class="qcheck">✓</div>
+  <div class="qbody">
+    <div class="qn">А3 · Аргумент про інші форми магнію</div>
+    <div class="qt">Чи використовую я аргумент «більшість форм магнію не проходять ГЕБ і не дають ефекту на когніцію»? Як лікар на нього реагує?</div>
   </div>
 </div>
 
-<div class="qc">
-  <div class="qn">А4 · 50% добової дози в одній пляшці</div>
-  <div class="qt">Чи закриваю я дискусію «а в Магне В6 більше мг» до того як вона починається?</div>
-  <div class="pills" id="ea4">
-    <span class="pill" onclick="tp(this,'ea4')">Так — доношу і лікар розуміє</span>
-    <span class="pill" onclick="tp(this,'ea4')">Не знаю цього аргументу</span>
-    <span class="pill" onclick="tp(this,'ea4')">Знаю але не використовую</span>
-    <span class="pill" onclick="tp(this,'ea4')">Лікар все одно порівнює по мг</span>
+<div class="qc" onclick="toggle(this)">
+  <div class="qcheck">✓</div>
+  <div class="qbody">
+    <div class="qn">А4 · 50% добової дози в одній пляшці</div>
+    <div class="qt">Як я відповідаю коли лікар каже «а в Магне В6 більше магнію»? Чи закриваю цю дискусію до того як вона починається?</div>
   </div>
 </div>
 
 <div class="bsep"><span class="bsl">Блок Б · Категорія і позиціонування</span><div class="bsl-ln"></div></div>
 
-<div class="qc">
-  <div class="qn">Б1 · Категорія в голові лікаря</div>
-  <div class="qt">Після мого візиту лікар розуміє що Емпаті — «розумна гідратація», а не вода з магнієм?</div>
-  <div class="pills" id="eb1">
-    <span class="pill" onclick="tp(this,'eb1')">Розуміє — нова категорія</span>
-    <span class="pill" onclick="tp(this,'eb1')">«Доповнення до магнію»</span>
-    <span class="pill" onclick="tp(this,'eb1')">«Вода замість таблеток»</span>
-    <span class="pill" onclick="tp(this,'eb1')">Ще не склалась картинка</span>
+<div class="qc" onclick="toggle(this)">
+  <div class="qcheck">✓</div>
+  <div class="qbody">
+    <div class="qn">Б1 · Категорія в голові лікаря</div>
+    <div class="qt">Після мого візиту лікар розуміє що Емпаті — «розумна гідратація», а не вода з магнієм і не замінник таблеток?</div>
   </div>
 </div>
 
-<div class="qc">
-  <div class="qn">Б2 · Без NaCl — ніша кардіо</div>
-  <div class="qt">Чи доношу я аргумент «не містить NaCl — безпечно для кардіологічних пацієнтів»?</div>
-  <div class="pills" id="eb2">
-    <span class="pill" onclick="tp(this,'eb2')">Доношу — кардіолог реагує позитивно</span>
-    <span class="pill" onclick="tp(this,'eb2')">Не акцентую цей аргумент</span>
-    <span class="pill" onclick="tp(this,'eb2')">Не відвідую кардіологів з Емпаті</span>
-    <span class="pill" onclick="tp(this,'eb2')">Лікар не вважає це важливим</span>
+<div class="qc" onclick="toggle(this)">
+  <div class="qcheck">✓</div>
+  <div class="qbody">
+    <div class="qn">Б2 · Без NaCl — ніша кардіо</div>
+    <div class="qt">Чи доношу я аргумент «не містить NaCl — безпечно для кардіологічних пацієнтів» кардіологам? Яка реакція?</div>
   </div>
 </div>
 
-<div class="qc">
-  <div class="qn">Б3 · Щоденний формат vs курс</div>
-  <div class="qt">Як лікар рекомендує Емпаті — як щоденний продукт чи як курс?</div>
-  <div class="pills" id="eb3">
-    <span class="pill" onclick="tp(this,'eb3')">«Щодня — стиль життя» ✓</span>
-    <span class="pill" onclick="tp(this,'eb3')">«Курс 30 днів»</span>
-    <span class="pill" onclick="tp(this,'eb3')">Нейтрально</span>
-    <span class="pill" onclick="tp(this,'eb3')">Ще не рекомендує</span>
+<div class="qc" onclick="toggle(this)">
+  <div class="qcheck">✓</div>
+  <div class="qbody">
+    <div class="qn">Б3 · Щоденний формат vs курс</div>
+    <div class="qt">Чи рекомендує лікар Емпаті як щоденний продукт стилю життя — чи як курс на місяць? Що я роблю щоб перевести у щоденний фрейм?</div>
   </div>
 </div>
 
 <div class="bsep"><span class="bsl">Блок В · Візит і домовленість</span><div class="bsl-ln"></div></div>
 
-<div class="qc">
-  <div class="qn">В1 · SPIN — де лікар вмикається</div>
-  <div class="qt">На якому кроці лікар починає говорити про своїх пацієнтів, а не просто слухати?</div>
-  <div class="pills" id="ev1">
-    <span class="pill" onclick="tp(this,'ev1')">S — одразу є контакт</span>
-    <span class="pill" onclick="tp(this,'ev1')">P — при питанні про дефіцит магнію</span>
-    <span class="pill" onclick="tp(this,'ev1')">I — «ефекту на когніцію немає?»</span>
-    <span class="pill" onclick="tp(this,'ev1')">N — тільки після рішення</span>
-    <span class="pill" onclick="tp(this,'ev1')">Не вмикається</span>
+<div class="qc" onclick="toggle(this)">
+  <div class="qcheck">✓</div>
+  <div class="qbody">
+    <div class="qn">В1 · SPIN — де лікар вмикається</div>
+    <div class="qt">На якому кроці SPIN лікар починає говорити про своїх пацієнтів, а не просто слухати? Що є тим тригером на моїй ділянці?</div>
   </div>
 </div>
 
-<div class="qc">
-  <div class="qn">В2 · Домовленість на виході</div>
-  <div class="qt">З якою домовленістю я виходжу з кабінету після візиту по Емпаті?</div>
-  <div class="pills" id="ev2">
-    <span class="pill" onclick="tp(this,'ev2')">«Призначатиму при когнітивному виснаженні» ✓</span>
-    <span class="pill" onclick="tp(this,'ev2')">«Спробую на кількох пацієнтах»</span>
-    <span class="pill" onclick="tp(this,'ev2')">«Подумаю» — без зобов'язань</span>
-    <span class="pill" onclick="tp(this,'ev2')">Не закриваю домовленість</span>
-    <span class="pill" onclick="tp(this,'ev2')">Відмова</span>
+<div class="qc" onclick="toggle(this)">
+  <div class="qcheck">✓</div>
+  <div class="qbody">
+    <div class="qn">В2 · Домовленість на виході</div>
+    <div class="qt">З якою конкретною домовленістю я виходжу з кабінету після візиту по Емпаті? Чи це рекомендація щоденного рішення — чи «подумаю»?</div>
   </div>
 </div>
 
-<div class="qc">
-  <div class="qn">В3 · Конкурентне порівняння</div>
-  <div class="qt">Коли лікар порівнює Емпаті з таблетованим магнієм — як я відповідаю?</div>
-  <div class="pills" id="ev3">
-    <span class="pill" onclick="tp(this,'ev3')">Утримую категорійний аргумент ✓</span>
-    <span class="pill" onclick="tp(this,'ev3')">Іноді порівнюю по мг — і губжу позицію</span>
-    <span class="pill" onclick="tp(this,'ev3')">Не вмію вийти з порівняння</span>
-    <span class="pill" onclick="tp(this,'ev3')">Лікарі поки не порівнюють</span>
+<div class="qc" onclick="toggle(this)">
+  <div class="qcheck">✓</div>
+  <div class="qbody">
+    <div class="qn">В3 · Конкурентне порівняння</div>
+    <div class="qt">Коли лікар порівнює Емпаті з таблетованим магнієм — чи утримую я категорійний аргумент, чи починаю порівнювати по мг і програю?</div>
   </div>
 </div>
 
 <div id="done-banner" class="done-banner">
-  <h3>Чекліст заповнено ✓</h3>
-  <p>Збережи свої відповіді або зроби скріншот.</p>
+  <h3>Чекліст пройдено ✓</h3>
+  <p>Ти готовий до візиту.</p>
 </div>
-
 </div>
 
 <div class="progress-wrap">
@@ -181,19 +152,14 @@ body{min-height:100vh;padding:0 0 80px;}
 </div>
 
 <script>
-var total=9;
-var answered={};
-function tp(el,g){
-  document.querySelectorAll('#'+g+' .pill').forEach(function(p){p.classList.remove('on');});
-  el.classList.add('on');
-  answered[g]=true;
-  updateProgress();
-}
-function updateProgress(){
-  var n=Object.keys(answered).length;
-  document.getElementById('prog').style.width=(n/total*100)+'%';
-  document.getElementById('prog-txt').textContent=n+' / '+total;
-  if(n===total) document.getElementById('done-banner').style.display='block';
+var total=9, count=0;
+function toggle(el){
+  var wasDone=el.classList.contains('done');
+  el.classList.toggle('done');
+  count+=wasDone?-1:1;
+  document.getElementById('prog').style.width=(count/total*100)+'%';
+  document.getElementById('prog-txt').textContent=count+' / '+total;
+  document.getElementById('done-banner').style.display=count===total?'block':'none';
 }
 </script>
 </body>
