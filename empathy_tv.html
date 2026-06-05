@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Емпаті · Оцінка МП · ТВ-візит · ЮРіЯ-ФАРМ</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F6F2;--surface:#FFFFFF;--border:rgba(0,0,0,.09);--text:#1A1A18;--muted:#6B6B67;--hint:#A8A8A4;--ac:#0F6E56;--ac-bg:#E1F5EE;--red:#E24B4A;--red-bg:#FCEBEB;--amber:#EF9F27;--amber-bg:#FAEEDA;--rl:12px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);font-size:14px;line-height:1.5;}
+body{min-height:100vh;padding:0 0 40px;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.tl{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;}
+.tb{font-size:12px;font-weight:500;color:var(--ac);}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px;}
+.hero{padding:24px 0 20px;}
+.hero h1{font-size:20px;font-weight:500;color:var(--text);margin-bottom:4px;}
+.hero p{font-size:12px;color:var(--muted);}
+.meta-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px;}
+.mf label{display:block;font-size:10px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.mf input{width:100%;font-family:'DM Sans',sans-serif;font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);outline:none;}
+.mf input:focus{border-color:var(--ac);}
+.block-title{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:20px 0 10px;display:flex;align-items:center;gap:8px;}
+.block-title::after{content:'';flex:1;height:0.5px;background:var(--border);}
+table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:var(--rl);overflow:hidden;border:1px solid var(--border);margin-bottom:12px;}
+thead tr{background:#0F6E56;}
+thead th{padding:10px 12px;font-size:11px;font-weight:500;color:#FFFFFF;text-align:left;letter-spacing:.02em;}
+thead th:first-child{width:32%;}
+thead th:nth-child(2){width:34%;}
+thead th:last-child{width:34%;}
+tbody tr{border-top:0.5px solid var(--border);}
+tbody tr:nth-child(even){background:#F9F8F5;}
+td{padding:10px 12px;font-size:12px;vertical-align:top;line-height:1.5;}
+td:first-child{font-weight:500;color:var(--text);}
+td:nth-child(2){color:#A32D2D;background:#FEF8F8;}
+td:last-child{color:#085041;background:#F4FCF8;}
+.level-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:500;letter-spacing:.04em;margin-bottom:4px;}
+.l-bad{background:var(--red-bg);color:#A32D2D;}
+.l-mid{background:var(--amber-bg);color:#633806;}
+.l-good{background:var(--ac-bg);color:#085041;}
+.col-head{font-size:10px;font-weight:500;letter-spacing:.04em;color:var(--muted);margin-bottom:3px;text-transform:uppercase;}
+.note-box{background:var(--amber-bg);border:0.5px solid var(--amber);border-radius:var(--rl);padding:12px 14px;margin-bottom:12px;font-size:12px;color:#412402;line-height:1.6;}
+.note-box strong{font-weight:500;color:#633806;}
+.score-row{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:16px;}
+.score-btn{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .15s;user-select:none;}
+.score-btn:hover{border-color:var(--ac);}
+.score-btn.on-1,.score-btn.on-2{background:var(--red-bg);border-color:var(--red);}
+.score-btn.on-3{background:var(--amber-bg);border-color:var(--amber);}
+.score-btn.on-4,.score-btn.on-5{background:var(--ac-bg);border-color:var(--ac);}
+.score-num{font-size:20px;font-weight:500;color:var(--text);display:block;}
+.score-lbl{font-size:10px;color:var(--muted);margin-top:2px;}
+.score-btn.on-1 .score-num,.score-btn.on-2 .score-num{color:var(--red);}
+.score-btn.on-3 .score-num{color:var(--amber);}
+.score-btn.on-4 .score-num,.score-btn.on-5 .score-num{color:var(--ac);}
+.obs-area{width:100%;font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);resize:vertical;min-height:60px;outline:none;line-height:1.6;margin-bottom:8px;}
+.obs-area:focus{border-color:var(--ac);}
+.obs-label{font-size:11px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.btn-submit{width:100%;padding:12px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:white;background:var(--ac);border:none;border-radius:10px;cursor:pointer;margin-top:8px;}
+.btn-submit:hover{opacity:.88;}
+.done-msg{display:none;padding:16px;background:var(--ac-bg);border:0.5px solid var(--ac);border-radius:var(--rl);text-align:center;font-size:13px;color:#085041;margin-top:8px;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="tl">ЮРіЯ-ФАРМ · РМ · ТВ-візит</span>
+  <span class="tb">Емпаті · Оцінка МП</span>
+</div>
+<div class="wrap">
+<div class="hero">
+  <h1>Емпаті — оцінка МП при ТВ-візиті</h1>
+  <p>Таблиця для спостереження та оцінки під час подвійного візиту · Червень 2026</p>
+</div>
+
+<div class="meta-row">
+  <div class="mf"><label>РМ</label><input type="text" id="rm" placeholder="Ваше прізвище"></div>
+  <div class="mf"><label>МП</label><input type="text" id="mp" placeholder="Прізвище МП"></div>
+  <div class="mf"><label>Дата</label><input type="date" id="dt"></div>
+</div>
+
+<div class="note-box">
+  <strong>Ціль на візит по Емпаті:</strong> домовитись про рекомендацію як щоденного рішення пацієнтам із когнітивним виснаженням, зниженням пам'яті і концентрацією на фоні основного захворювання — як доповнення до базової терапії.
+</div>
+
+<!-- БЛОК А: МОЛЕКУЛА -->
+<div class="block-title">Блок А · Молекула і механізм</div>
+<table>
+  <thead>
+    <tr>
+      <th>Що оцінюємо</th>
+      <th>Слабко / Не ОК</th>
+      <th>Добре / ОК</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>А1 · Механізм L-треонату і ГЕБ</td>
+      <td><span class="l-bad level-badge">Слабко</span><br>Каже «кращий магній» без пояснення. Не згадує ГЕБ. Губиться коли лікар уточнює.</td>
+      <td><span class="l-good level-badge">Добре</span><br>«L-треонат — єдина форма що долає ГЕБ і накопичується в нейронах. Цитрат і оксид не проходять — вони для м'язів і серця.»</td>
+    </tr>
+    <tr>
+      <td>А2 · Когнітивний резерв і зниження Mg у мозку</td>
+      <td><span class="l-bad level-badge">Слабко</span><br>Говорить «антистрес», «заспокоєння», «для нервів». Заходить у чуже поле.</td>
+      <td><span class="l-good level-badge">Добре</span><br>«Основне захворювання + стрес знижують магній саме в тканинах мозку. Нормальний Mg у крові не виключає дефіциту в ЦНС.»</td>
+    </tr>
+    <tr>
+      <td>А3 · Базова терапія не закриває дефіцит Mg у мозку</td>
+      <td><span class="l-bad level-badge">Слабко</span><br>Не використовує цей аргумент. Не пояснює чому лікування основного захворювання не відновлює когнітивний резерв.</td>
+      <td><span class="l-good level-badge">Добре</span><br>«Ви контролюєте основне захворювання — але хронічна втома, перевантаження і стрес залишаються. На цьому фоні Mg у мозку знижений. Емпаті закриває саме це.»</td>
+    </tr>
+    <tr>
+      <td>А4 · Відповідь на «є Магне В6»</td>
+      <td><span class="l-bad level-badge">Слабко</span><br>Порівнює по мг. Каже «L-треонат кращий» без пояснення різниці мішеней.</td>
+      <td><span class="l-good level-badge">Добре</span><br>«Магне В6 — стрес і периферія. Емпаті — мозок локально через ГЕБ. Різні мішені, не конкуренти. Це доповнення до того що ви вже призначаєте.»</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- БЛОК Б: SPIN -->
+<div class="block-title">Блок Б · SPIN і вхід у тему</div>
+<table>
+  <thead>
+    <tr>
+      <th>Що оцінюємо</th>
+      <th>Слабко / Не ОК</th>
+      <th>Добре / ОК</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Б1 · S — ситуаційне питання</td>
+      <td><span class="l-bad level-badge">Слабко</span><br>Питає про стрес і нерви. Або одразу переходить до продукту без питань.</td>
+      <td><span class="l-good level-badge">Добре</span><br>«У вашій практиці є пацієнти що скаржаться на зниження пам'яті, складність з концентрацією, розумову втому — особливо на фоні основного захворювання?»</td>
+    </tr>
+    <tr>
+      <td>Б2 · P і I — проблема і наслідки</td>
+      <td><span class="l-bad level-badge">Слабко</span><br>Не чекає відповіді лікаря. Переходить до презентації до того як лікар назвав проблему своїми словами.</td>
+      <td><span class="l-good level-badge">Добре</span><br>«Фактично це зниження когнітивного резерву. Ви призначаєте магній таким пацієнтам? І як часто бачите що ефекту на когніцію немає?» — лікар сам підтверджує проблему.</td>
+    </tr>
+    <tr>
+      <td>Б3 · N — рішення</td>
+      <td><span class="l-mid level-badge">Середньо</span><br>Пропонує рішення без логічного переходу від проблеми.</td>
+      <td><span class="l-good level-badge">Добре</span><br>«Причина — більшість форм магнію не проходять ГЕБ. Потрібна форма яка діє безпосередньо в нейронах. L-треонат — це саме така форма.»</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- БЛОК В: ПРЕЗЕНТАЦІЯ -->
+<div class="block-title">Блок В · Презентація продукту</div>
+<table>
+  <thead>
+    <tr>
+      <th>Що оцінюємо</th>
+      <th>Слабко / Не ОК</th>
+      <th>Добре / ОК</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>В1 · Категорія «розумна гідратація»</td>
+      <td><span class="l-bad level-badge">Слабко</span><br>Презентує як «воду з магнієм». Лікар після візиту думає що це як Магне В6 але у воді.</td>
+      <td><span class="l-good level-badge">Добре</span><br>«Емпаті — це 50% добової норми L-треонату + фізіологічна гідратація в одному продукті. Закриває дві причини когнітивних симптомів одночасно: дефіцит Mg у мозку і дегідратацію.»</td>
+    </tr>
+    <tr>
+      <td>В2 · Аргумент NaCl для кардіо</td>
+      <td><span class="l-mid level-badge">Пропускає</span><br>Не використовує аргумент при розмові з кардіологом. Втрачає нішу.</td>
+      <td><span class="l-good level-badge">Добре</span><br>«Без NaCl — не затримує рідину. Можна безпечно рекомендувати навіть при артеріальній гіпертензії, ІХС та іншій кардіальній коморбідності.»</td>
+    </tr>
+    <tr>
+      <td>В3 · Щоденний фрейм vs курс</td>
+      <td><span class="l-bad level-badge">Слабко</span><br>Говорить «курс 30 днів» або «спробуйте упаковку». Лікар одразу порівнює вартість з таблетками.</td>
+      <td><span class="l-good level-badge">Добре</span><br>«1 пляшка на день замість звичайної води. Не курс — щоденна звичка. Мозок потребує турботи щодня, не місячними курсами.»</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- БЛОК Г: ДОМОВЛЕНІСТЬ -->
+<div class="block-title">Блок Г · Закриття і домовленість</div>
+<table>
+  <thead>
+    <tr>
+      <th>Що оцінюємо</th>
+      <th>Слабко / Не ОК</th>
+      <th>Добре / ОК</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Г1 · Заклик до домовленості</td>
+      <td><span class="l-bad level-badge">Слабко</span><br>Чекає реакції лікаря. Не закриває. Виходить з «він зацікавився» без конкретики.</td>
+      <td><span class="l-good level-badge">Добре</span><br>«Давайте домовимось — пацієнтам з когнітивним виснаженням на фоні основного захворювання ви будете рекомендувати Емпаті як щоденне джерело магнію для мозку і розумну гідратацію.»</td>
+    </tr>
+    <tr>
+      <td>Г2 · Якість домовленості</td>
+      <td><span class="l-bad level-badge">Не ОК</span><br>«Подумаю» / «Може спробую» / «Побачимо» — МП приймає це як результат.</td>
+      <td><span class="l-good level-badge">ОК</span><br>«Призначатиму при когнітивному виснаженні» / «Спробую на 2–3 пацієнтах» / «Є в аптеці?» — конкретна наступна дія лікаря.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ЗАГАЛЬНА ОЦІНКА -->
+<div class="block-title">Загальна оцінка візиту</div>
+<div class="score-row" id="scoreRow">
+  <div class="score-btn" onclick="setScore(1)"><span class="score-num">1</span><div class="score-lbl">Критично</div></div>
+  <div class="score-btn" onclick="setScore(2)"><span class="score-num">2</span><div class="score-lbl">Слабко</div></div>
+  <div class="score-btn" onclick="setScore(3)"><span class="score-num">3</span><div class="score-lbl">Базово</div></div>
+  <div class="score-btn" onclick="setScore(4)"><span class="score-num">4</span><div class="score-lbl">Добре</div></div>
+  <div class="score-btn" onclick="setScore(5)"><span class="score-num">5</span><div class="score-lbl">Відмінно</div></div>
+</div>
+
+<div class="obs-label">Що спрацювало — конкретний момент або аргумент</div>
+<textarea class="obs-area" id="obs_win" placeholder="Наприклад: коли МП запитала «ви бачите що після магнію ефекту на когніцію немає?» — лікар одразу оживився і назвав трьох пацієнтів..."></textarea>
+
+<div class="obs-label">Що не спрацювало — де МП губився або відступив</div>
+<textarea class="obs-area" id="obs_fail" placeholder="Наприклад: при запереченні «є Магне В6» МП почав порівнювати по мг і програв аргумент..."></textarea>
+
+<div class="obs-label">Фокус розвитку МП на наступний місяць</div>
+<textarea class="obs-area" id="obs_focus" style="min-height:48px" placeholder="Один конкретний навик або аргумент для відпрацювання..."></textarea>
+
+<button class="btn-submit" onclick="submit()">Зберегти оцінку та надіслати →</button>
+<div class="done-msg" id="doneMsg">Оцінку збережено і надіслано. Дякуємо!</div>
+</div>
+
+<script>
+var score = 0;
+function setScore(n) {
+  score = n;
+  document.querySelectorAll('.score-btn').forEach(function(b, i) {
+    b.className = 'score-btn' + (i < n ? ' on-' + n : '');
+  });
+}
+function gv(id) { return (document.getElementById(id)||{}).value||''; }
+function submit() {
+  var rm=gv('rm'), mp=gv('mp'), dt=gv('dt');
+  var subj = encodeURIComponent('ТВ-оцінка МП Емпаті · ' + mp + ' · ' + rm + ' · ' + dt);
+  var body = encodeURIComponent([
+    'ТВ-ОЦІНКА МП · ЕМПАТІ',
+    'РМ: ' + rm + ' | МП: ' + mp + ' | Дата: ' + dt,
+    'Загальна оцінка: ' + score + '/5',
+    '',
+    'Що спрацювало:',
+    gv('obs_win'),
+    '',
+    'Що не спрацювало:',
+    gv('obs_fail'),
+    '',
+    'Фокус розвитку:',
+    gv('obs_focus'),
+  ].join('\n'));
+  window.location.href = 'mailto:oleksii.shapravskyi@uf.ua?subject=' + subj + '&body=' + body;
+  document.querySelector('.btn-submit').style.display = 'none';
+  document.getElementById('doneMsg').style.display = 'block';
+}
+</script>
+</body>
+</html>
