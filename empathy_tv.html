@@ -7,399 +7,397 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F0F2F5;--surface:#FFFFFF;--border:rgba(0,0,0,.08);
-  --text:#1A1A18;--muted:#6B6B67;--hint:#A8A8A4;
+  --bg:#F0F2F5;--surf:#FFF;--border:rgba(0,0,0,.08);
+  --text:#1A1A18;--muted:#6B6B67;--hint:#B0B0AA;
   --ac:#0F6E56;--ac-bg:#E1F5EE;--ac-mid:#1D9E75;
   --red:#C93535;--red-bg:#FCEBEB;--red-mid:#E24B4A;
-  --amber:#B87010;--amber-bg:#FEF3E2;--amber-mid:#EF9F27;
+  --amb:#B87010;--amb-bg:#FEF3E2;--amb-mid:#EF9F27;
   --rl:12px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-html{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);font-size:15px;line-height:1.6;}
-body{min-height:100vh;padding:0 0 60px;}
+html{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);font-size:14px;line-height:1.5;}
+body{padding:0 0 70px;}
 
-.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:13px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06);}
-.tl{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;}
-.score-pill{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;padding:4px 12px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--muted);transition:all .3s;}
-.score-pill.s-good{background:var(--ac-bg);border-color:var(--ac-mid);color:var(--ac);}
-.score-pill.s-mid{background:var(--amber-bg);border-color:var(--amber-mid);color:var(--amber);}
-.score-pill.s-bad{background:var(--red-bg);border-color:var(--red-mid);color:var(--red);}
+.topbar{background:var(--surf);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.tl{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.07em;color:var(--muted);text-transform:uppercase;}
+.top-score{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;padding:4px 12px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--muted);transition:all .3s;}
+.top-score.g{background:var(--ac-bg);border-color:var(--ac-mid);color:var(--ac);}
+.top-score.m{background:var(--amb-bg);border-color:var(--amb-mid);color:var(--amb);}
+.top-score.b{background:var(--red-bg);border-color:var(--red-mid);color:var(--red);}
 
-.wrap{max-width:680px;margin:0 auto;padding:0 16px;}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px;}
+.hero{padding:22px 0 16px;}
+.hero h1{font-size:20px;font-weight:500;margin-bottom:3px;}
+.hero p{font-size:12px;color:var(--muted);}
 
-.hero{padding:28px 0 20px;}
-.hero h1{font-size:21px;font-weight:500;color:var(--text);margin-bottom:4px;}
-.hero p{font-size:13px;color:var(--muted);}
+.meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;}
+.fl label{display:block;font-size:10px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.fl input{width:100%;font-size:13px;font-family:'DM Sans',sans-serif;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surf);color:var(--text);outline:none;}
+.fl input:focus{border-color:var(--ac-mid);}
 
-.meta-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px;}
-.mf label{display:block;font-size:10px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
-.mf input{width:100%;font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);outline:none;transition:border-color .15s;}
-.mf input:focus{border-color:var(--ac-mid);}
-
-.goal-box{background:#E8F4F0;border:1px solid #A8D5C5;border-radius:var(--rl);padding:12px 14px;margin-bottom:20px;font-size:12px;color:#085041;line-height:1.6;}
-.goal-box strong{font-weight:500;}
+.goal{background:#EAF5F0;border:1px solid #A8D5C5;border-radius:var(--rl);padding:10px 13px;margin-bottom:18px;font-size:12px;color:#085041;line-height:1.6;}
+.goal strong{font-weight:500;}
 
 /* BLOCK */
-.block{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);}
-.block-header{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);background:#FAFAFA;}
-.block-letter{width:30px;height:30px;border-radius:8px;background:var(--ac-bg);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--ac);flex-shrink:0;}
-.block-name{font-size:14px;font-weight:500;color:var(--text);}
-.block-sub{font-size:11px;color:var(--muted);margin-top:1px;}
-.block-score{margin-left:auto;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--muted);}
+.blk{background:var(--surf);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.blk-head{display:flex;align-items:center;gap:10px;padding:12px 14px 10px;background:#FAFAFA;border-bottom:1px solid var(--border);}
+.blk-ico{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;flex-shrink:0;}
+.blk-name{font-size:13px;font-weight:500;}
+.blk-sub{font-size:11px;color:var(--muted);}
+.blk-pct{margin-left:auto;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--hint);transition:color .3s;}
 
-/* CRITERIA ITEM */
-.crit{padding:14px 16px;border-bottom:0.5px solid var(--border);}
-.crit:last-child{border-bottom:none;}
-.crit-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;line-height:1.5;}
-.crit-hint{font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.5;}
-.btn-row{display:flex;gap:6px;flex-wrap:wrap;}
-.crit-btn{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;user-select:none;background:var(--bg);font-family:'DM Sans',sans-serif;}
-.crit-btn:hover{border-color:var(--hint);}
-.crit-btn.sel-ok{background:var(--ac-bg);border-color:var(--ac-mid);color:var(--ac);}
-.crit-btn.sel-mid{background:var(--amber-bg);border-color:var(--amber-mid);color:var(--amber);}
-.crit-btn.sel-bad{background:var(--red-bg);border-color:var(--red-mid);color:var(--red);}
+/* TABLE */
+table{width:100%;border-collapse:collapse;}
+thead tr{background:#0F6E56;}
+thead th{padding:8px 12px;font-size:11px;font-weight:500;color:#fff;text-align:left;letter-spacing:.02em;}
+thead th:first-child{width:26%;}
+thead th:nth-child(2){width:29%;}
+thead th:nth-child(3){width:29%;}
+thead th:last-child{width:16%;text-align:center;}
+tbody tr{border-top:0.5px solid var(--border);}
+tbody tr:nth-child(even){background:#FAFAF8;}
+td{padding:10px 12px;font-size:12px;vertical-align:top;line-height:1.5;}
+td:first-child{font-weight:500;color:var(--text);}
+td.bad-col{color:#A32D2D;background:#FEF8F8;}
+td.ok-col{color:#085041;background:#F4FCF8;}
 
-/* SCORE RESULT */
-.result-block{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:12px;display:none;}
-.result-block.vis{display:block;}
-.result-header{font-size:13px;font-weight:500;color:var(--muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:.04em;font-family:'DM Mono',monospace;}
-.score-big{font-size:52px;font-weight:300;letter-spacing:-.03em;line-height:1;margin-bottom:4px;}
-.score-label{font-size:14px;font-weight:500;margin-bottom:14px;}
-.score-good{color:var(--ac);}
-.score-mid{color:var(--amber);}
-.score-bad{color:var(--red);}
-.score-bar-wrap{height:8px;background:var(--bg);border-radius:4px;overflow:hidden;margin-bottom:16px;}
-.score-bar-fill{height:100%;border-radius:4px;transition:width .5s ease;}
-.criteria-summary{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
-.sum-item{padding:8px 10px;border-radius:8px;font-size:12px;line-height:1.4;}
-.sum-item.ok{background:var(--ac-bg);color:var(--ac);}
-.sum-item.warn{background:var(--amber-bg);color:var(--amber);}
-.sum-item.bad{background:var(--red-bg);color:var(--red);}
-.sum-item strong{font-weight:500;display:block;font-size:11px;margin-bottom:1px;}
+/* CHOICE BUTTONS in last td */
+td.choice{text-align:center;vertical-align:middle;padding:8px;}
+.choice-wrap{display:flex;flex-direction:column;gap:5px;align-items:center;}
+.cbtn{width:100%;padding:5px 8px;border-radius:6px;border:1.5px solid var(--border);font-size:11px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;user-select:none;background:var(--bg);font-family:'DM Sans',sans-serif;white-space:nowrap;}
+.cbtn:hover{border-color:var(--hint);}
+.cbtn.on-ok{background:var(--ac-bg);border-color:var(--ac-mid);color:var(--ac);}
+.cbtn.on-mid{background:var(--amb-bg);border-color:var(--amb-mid);color:var(--amb);}
+.cbtn.on-bad{background:var(--red-bg);border-color:var(--red-mid);color:var(--red);}
 
-/* OBSERVATIONS */
-.obs-label{font-size:11px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
-textarea{width:100%;font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);resize:vertical;min-height:56px;outline:none;line-height:1.6;transition:border-color .15s;margin-bottom:12px;}
+/* RESULT */
+.result{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:10px;display:none;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.result.vis{display:block;}
+.res-top{display:flex;align-items:flex-end;gap:16px;margin-bottom:14px;}
+.res-num{font-size:54px;font-weight:300;line-height:1;letter-spacing:-.03em;}
+.res-num.g{color:var(--ac);}
+.res-num.m{color:var(--amb);}
+.res-num.b{color:var(--red);}
+.res-lbl{font-size:14px;font-weight:500;margin-bottom:4px;}
+.res-lbl.g{color:var(--ac);}
+.res-lbl.m{color:var(--amb);}
+.res-lbl.b{color:var(--red);}
+.res-sub{font-size:12px;color:var(--muted);}
+.bar-wrap{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;margin-bottom:14px;}
+.bar-fill{height:100%;border-radius:3px;transition:width .6s ease;}
+.grid-sum{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;}
+.si{padding:7px 9px;border-radius:7px;font-size:11px;line-height:1.4;}
+.si strong{font-weight:500;display:block;font-size:10px;margin-bottom:1px;text-transform:uppercase;letter-spacing:.03em;}
+.si.ok{background:var(--ac-bg);color:var(--ac);}
+.si.mid{background:var(--amb-bg);color:var(--amb);}
+.si.bad{background:var(--red-bg);color:var(--red);}
+
+/* OBS */
+.obs-wrap{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.obs-lbl{font-size:10px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;margin-top:10px;}
+.obs-lbl:first-child{margin-top:0;}
+textarea{width:100%;font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 11px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);resize:vertical;min-height:52px;outline:none;line-height:1.6;transition:border-color .15s;}
 textarea:focus{border-color:var(--ac-mid);}
-
-.btn-send{width:100%;padding:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:white;background:var(--ac);border:none;border-radius:10px;cursor:pointer;transition:opacity .15s;}
+.btn-send{width:100%;padding:11px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:#fff;background:var(--ac);border:none;border-radius:9px;cursor:pointer;margin-top:10px;}
 .btn-send:hover{opacity:.88;}
-.done-msg{display:none;padding:14px;background:var(--ac-bg);border:1px solid var(--ac-mid);border-radius:10px;text-align:center;font-size:13px;color:var(--ac);margin-top:8px;}
+.done-msg{display:none;padding:12px;background:var(--ac-bg);border:1px solid var(--ac-mid);border-radius:9px;text-align:center;font-size:12px;color:var(--ac);margin-top:8px;}
 
-.progress-wrap{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 -1px 6px rgba(0,0,0,.06);}
-.progress-bar{flex:1;height:3px;background:var(--bg);border-radius:2px;overflow:hidden;}
-.progress-fill{height:100%;background:var(--ac-mid);border-radius:2px;transition:width .3s;}
-.progress-txt{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
+/* PROGRESS */
+.prog-bar-wrap{position:fixed;bottom:0;left:0;right:0;background:var(--surf);border-top:1px solid var(--border);padding:9px 18px;display:flex;align-items:center;gap:11px;box-shadow:0 -1px 5px rgba(0,0,0,.06);}
+.prog-bar{flex:1;height:3px;background:var(--bg);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--ac-mid);border-radius:2px;transition:width .3s;}
+.prog-txt{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <span class="tl">ЮРіЯ-ФАРМ · ТВ-Візит</span>
-  <span class="score-pill" id="topScore">0 / 10</span>
+  <span class="tl">ЮРіЯ-ФАРМ · ТВ-Візит · Емпаті</span>
+  <span class="top-score" id="topScore">0 / 10</span>
 </div>
 
 <div class="wrap">
 <div class="hero">
   <h1>Оцінка МП · Емпаті</h1>
-  <p>Подвійний візит · обирай оцінку по кожному критерію</p>
+  <p>Подвійний візит · обери варіант у кожному рядку — оцінка порахується автоматично</p>
 </div>
 
-<div class="meta-row">
-  <div class="mf"><label>РМ</label><input type="text" id="rm" placeholder="Ваше прізвище"></div>
-  <div class="mf"><label>МП</label><input type="text" id="mp" placeholder="Прізвище МП"></div>
-  <div class="mf"><label>Дата</label><input type="date" id="dt"></div>
+<div class="meta">
+  <div class="fl"><label>РМ</label><input type="text" id="rm" placeholder="Прізвище"></div>
+  <div class="fl"><label>МП</label><input type="text" id="mp" placeholder="Прізвище МП"></div>
+  <div class="fl"><label>Дата</label><input type="date" id="dt"></div>
 </div>
 
-<div class="goal-box">
-  <strong>Ціль на візит:</strong> домовитись про рекомендацію Емпаті як щоденного рішення пацієнтам із когнітивним виснаженням на фоні основного захворювання — як доповнення до базової терапії.
+<div class="goal"><strong>Ціль на візит:</strong> домовитись про рекомендацію Емпаті як щоденного рішення пацієнтам із когнітивним виснаженням на фоні основного захворювання — як доповнення до базової терапії.</div>
+
+<!-- БЛОК А -->
+<div class="blk">
+  <div class="blk-head">
+    <div class="blk-ico" style="background:#E1F5EE;color:#0F6E56;">А</div>
+    <div><div class="blk-name">Молекула і механізм</div><div class="blk-sub">L-треонат · ГЕБ · когнітивний резерв</div></div>
+    <div class="blk-pct" id="bp-a">—</div>
+  </div>
+  <table>
+    <thead><tr><th>Що оцінюємо</th><th>✗ Слабко</th><th>✓ Добре</th><th>Оцінка</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>А1 · Механізм L-треонату і ГЕБ<br><span style="font-weight:400;color:var(--muted);font-size:11px;">Вага ×2</span></td>
+        <td class="bad-col">Каже «кращий магній» без пояснення. Не згадує ГЕБ. Губиться при уточненнях.</td>
+        <td class="ok-col">«L-треонат — єдина форма що долає ГЕБ і накопичується в нейронах. Цитрат і оксид не проходять.»</td>
+        <td class="choice"><div class="choice-wrap">
+          <button class="cbtn" onclick="ch(this,'a1','ok',2)">✓ Добре</button>
+          <button class="cbtn" onclick="ch(this,'a1','mid',2)">~ Частково</button>
+          <button class="cbtn" onclick="ch(this,'a1','bad',2)">✗ Слабко</button>
+        </div></td>
+      </tr>
+      <tr>
+        <td>А2 · Когнітивний резерв — не «стрес і нерви»<br><span style="font-weight:400;color:var(--muted);font-size:11px;">Вага ×2</span></td>
+        <td class="bad-col">Говорить через стрес / заспокоєння. Заходить у чуже поле.</td>
+        <td class="ok-col">«Основне захворювання + стрес знижують Mg саме в мозку. Аналіз Mg у крові не відображає дефіцит у ЦНС.»</td>
+        <td class="choice"><div class="choice-wrap">
+          <button class="cbtn" onclick="ch(this,'a2','ok',2)">✓ Добре</button>
+          <button class="cbtn" onclick="ch(this,'a2','mid',2)">~ Частково</button>
+          <button class="cbtn" onclick="ch(this,'a2','bad',2)">✗ Слабко</button>
+        </div></td>
+      </tr>
+      <tr>
+        <td>А3 · Відповідь на «є Магне В6»<br><span style="font-weight:400;color:var(--muted);font-size:11px;">Вага ×2</span></td>
+        <td class="bad-col">Порівнює по мг. Каже «кращий» без різниці мішеней. Програє аргумент.</td>
+        <td class="ok-col">«Магне В6 — стрес і периферія. Емпаті — мозок локально через ГЕБ. Різні мішені, не конкуренти.»</td>
+        <td class="choice"><div class="choice-wrap">
+          <button class="cbtn" onclick="ch(this,'a3','ok',2)">✓ Добре</button>
+          <button class="cbtn" onclick="ch(this,'a3','mid',2)">~ Частково</button>
+          <button class="cbtn" onclick="ch(this,'a3','bad',2)">✗ Слабко</button>
+        </div></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<!-- БЛОК А: МОЛЕКУЛА -->
-<div class="block">
-  <div class="block-header">
-    <div class="block-letter">А</div>
-    <div>
-      <div class="block-name">Молекула і механізм</div>
-      <div class="block-sub">L-треонат · ГЕБ · когнітивний резерв</div>
-    </div>
-    <div class="block-score" id="bs-a">—</div>
+<!-- БЛОК Б -->
+<div class="blk">
+  <div class="blk-head">
+    <div class="blk-ico" style="background:#E6F1FB;color:#185FA5;">Б</div>
+    <div><div class="blk-name">SPIN — вхід у тему</div><div class="blk-sub">Ситуація · Проблема · Наслідки · Рішення</div></div>
+    <div class="blk-pct" id="bp-b">—</div>
   </div>
-
-  <div class="crit" data-id="a1" data-weight="2">
-    <div class="crit-q">МП пояснює механізм L-треонату і ГЕБ</div>
-    <div class="crit-hint">«L-треонат — єдина форма що долає ГЕБ і накопичується в нейронах. Цитрат, оксид, гліцинат — не проходять.»</div>
-    <div class="btn-row">
-      <button class="crit-btn" onclick="pick(this,'ok')">✓ Пояснює чітко</button>
-      <button class="crit-btn" onclick="pick(this,'mid')">~ Каже «кращий магній»</button>
-      <button class="crit-btn" onclick="pick(this,'bad')">✗ Не пояснює / губиться</button>
-    </div>
-  </div>
-
-  <div class="crit" data-id="a2" data-weight="2">
-    <div class="crit-q">МП говорить про когнітивний резерв — не про «стрес і нерви»</div>
-    <div class="crit-hint">«Основне захворювання + стрес знижують Mg саме в тканинах мозку. Аналіз Mg у крові не відображає дефіцит у ЦНС.»</div>
-    <div class="btn-row">
-      <button class="crit-btn" onclick="pick(this,'ok')">✓ Через когнітивний резерв</button>
-      <button class="crit-btn" onclick="pick(this,'mid')">~ Мікс: і стрес, і когніція</button>
-      <button class="crit-btn" onclick="pick(this,'bad')">✗ Через стрес / заспокоєння</button>
-    </div>
-  </div>
-
-  <div class="crit" data-id="a3" data-weight="2">
-    <div class="crit-q">Відповідь на заперечення «є Магне В6»</div>
-    <div class="crit-hint">«Магне В6 — стрес і периферія. Емпаті — мозок локально через ГЕБ. Різні мішені, не конкуренти.»</div>
-    <div class="btn-row">
-      <button class="crit-btn" onclick="pick(this,'ok')">✓ Утримує різницю мішеней</button>
-      <button class="crit-btn" onclick="pick(this,'mid')">~ Частково пояснює</button>
-      <button class="crit-btn" onclick="pick(this,'bad')">✗ Порівнює по мг / програє</button>
-    </div>
-  </div>
+  <table>
+    <thead><tr><th>Що оцінюємо</th><th>✗ Слабко</th><th>✓ Добре</th><th>Оцінка</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Б1 · S-питання — через когніцію на фоні захворювання</td>
+        <td class="bad-col">Питає про стрес і нерви. Або одразу до продукту без питань.</td>
+        <td class="ok-col">«У ваших пацієнтів є скарги на зниження пам'яті, концентрації, розумову втому на фоні основного захворювання?»</td>
+        <td class="choice"><div class="choice-wrap">
+          <button class="cbtn" onclick="ch(this,'b1','ok',1)">✓ Добре</button>
+          <button class="cbtn" onclick="ch(this,'b1','mid',1)">~ Частково</button>
+          <button class="cbtn" onclick="ch(this,'b1','bad',1)">✗ Слабко</button>
+        </div></td>
+      </tr>
+      <tr>
+        <td>Б2 · I-питання — чекає відповіді лікаря</td>
+        <td class="bad-col">Не дає лікарю часу. Переходить до презентації до того як лікар назвав проблему.</td>
+        <td class="ok-col">«Ви призначаєте магній? І як часто бачите що ефекту на когніцію немає?» — лікар сам підтверджує проблему.</td>
+        <td class="choice"><div class="choice-wrap">
+          <button class="cbtn" onclick="ch(this,'b2','ok',1)">✓ Добре</button>
+          <button class="cbtn" onclick="ch(this,'b2','mid',1)">~ Частково</button>
+          <button class="cbtn" onclick="ch(this,'b2','bad',1)">✗ Слабко</button>
+        </div></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<!-- БЛОК Б: SPIN -->
-<div class="block">
-  <div class="block-header">
-    <div class="block-letter" style="background:#E6F1FB;color:#185FA5;">Б</div>
-    <div>
-      <div class="block-name">SPIN — вхід у тему</div>
-      <div class="block-sub">Ситуація · Проблема · Наслідки · Рішення</div>
-    </div>
-    <div class="block-score" id="bs-b">—</div>
+<!-- БЛОК В -->
+<div class="blk">
+  <div class="blk-head">
+    <div class="blk-ico" style="background:#EEF0FE;color:#534AB7;">В</div>
+    <div><div class="blk-name">Презентація продукту</div><div class="blk-sub">Категорія · NaCl · щоденний фрейм</div></div>
+    <div class="blk-pct" id="bp-v">—</div>
   </div>
-
-  <div class="crit" data-id="b1" data-weight="2">
-    <div class="crit-q">S-питання — через правильну аудиторію</div>
-    <div class="crit-hint">«У ваших пацієнтів з основним захворюванням є скарги на зниження пам'яті, складність з концентрацією, розумову втому?»</div>
-    <div class="btn-row">
-      <button class="crit-btn" onclick="pick(this,'ok')">✓ Через когніцію і основне захворювання</button>
-      <button class="crit-btn" onclick="pick(this,'mid')">~ Через загальний стрес</button>
-      <button class="crit-btn" onclick="pick(this,'bad')">✗ Одразу до продукту</button>
-    </div>
-  </div>
-
-  <div class="crit" data-id="b2" data-weight="1">
-    <div class="crit-q">I-питання — чи чекає відповіді лікаря</div>
-    <div class="crit-hint">«Ви призначаєте магній? І як часто бачите що ефекту на когніцію немає?» — лікар сам підтверджує проблему.</div>
-    <div class="btn-row">
-      <button class="crit-btn" onclick="pick(this,'ok')">✓ Чекає — лікар назвав проблему</button>
-      <button class="crit-btn" onclick="pick(this,'mid')">~ Частково — не дає часу</button>
-      <button class="crit-btn" onclick="pick(this,'bad')">✗ Не питає / переходить одразу</button>
-    </div>
-  </div>
+  <table>
+    <thead><tr><th>Що оцінюємо</th><th>✗ Слабко</th><th>✓ Добре</th><th>Оцінка</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>В1 · Категорія «розумна гідратація»</td>
+        <td class="bad-col">Презентує як «воду з магнієм». Лікар думає що це як Магне В6 у воді.</td>
+        <td class="ok-col">«50% добової норми L-треонату + фізіологічна гідратація. Закриває дефіцит Mg у мозку і дегідратацію одночасно.»</td>
+        <td class="choice"><div class="choice-wrap">
+          <button class="cbtn" onclick="ch(this,'v1','ok',1)">✓ Добре</button>
+          <button class="cbtn" onclick="ch(this,'v1','mid',1)">~ Частково</button>
+          <button class="cbtn" onclick="ch(this,'v1','bad',1)">✗ Слабко</button>
+        </div></td>
+      </tr>
+      <tr>
+        <td>В2 · Аргумент «без NaCl» для кардіологів</td>
+        <td class="bad-col">Не використовує аргумент. Пропускає нішу кардіо.</td>
+        <td class="ok-col">«Не затримує рідину — безпечно при гіпертензії, ІХС та іншій кардіальній коморбідності.»</td>
+        <td class="choice"><div class="choice-wrap">
+          <button class="cbtn" onclick="ch(this,'v2','ok',1)">✓ Добре</button>
+          <button class="cbtn" onclick="ch(this,'v2','mid',1)">~ Н/А</button>
+          <button class="cbtn" onclick="ch(this,'v2','bad',1)">✗ Пропустив</button>
+        </div></td>
+      </tr>
+      <tr>
+        <td>В3 · «Щодня» замість «курс»</td>
+        <td class="bad-col">Говорить «курс 30 днів» — лікар одразу порівнює вартість з таблетками.</td>
+        <td class="ok-col">«1 пляшка замість звичайної води щодня. Не курс — звичка. Мозок потребує турботи кожен день.»</td>
+        <td class="choice"><div class="choice-wrap">
+          <button class="cbtn" onclick="ch(this,'v3','ok',1)">✓ Добре</button>
+          <button class="cbtn" onclick="ch(this,'v3','mid',1)">~ Частково</button>
+          <button class="cbtn" onclick="ch(this,'v3','bad',1)">✗ «Курс»</button>
+        </div></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<!-- БЛОК В: ПРЕЗЕНТАЦІЯ -->
-<div class="block">
-  <div class="block-header">
-    <div class="block-letter" style="background:#EEF0FE;color:#534AB7;">В</div>
-    <div>
-      <div class="block-name">Презентація продукту</div>
-      <div class="block-sub">Категорія · NaCl · щоденний фрейм</div>
-    </div>
-    <div class="block-score" id="bs-v">—</div>
+<!-- БЛОК Г -->
+<div class="blk">
+  <div class="blk-head">
+    <div class="blk-ico" style="background:#FEF3E2;color:#633806;">Г</div>
+    <div><div class="blk-name">Закриття і домовленість</div><div class="blk-sub">Заклик · якість результату</div></div>
+    <div class="blk-pct" id="bp-g">—</div>
   </div>
-
-  <div class="crit" data-id="v1" data-weight="1">
-    <div class="crit-q">Формує категорію «розумна гідратація» — не «вода з магнієм»</div>
-    <div class="crit-hint">«Емпаті — 50% добової норми L-треонату + фізіологічна гідратація. Закриває дефіцит Mg у мозку і дегідратацію одночасно.»</div>
-    <div class="btn-row">
-      <button class="crit-btn" onclick="pick(this,'ok')">✓ Нова категорія</button>
-      <button class="crit-btn" onclick="pick(this,'mid')">~ «Вода з корисним магнієм»</button>
-      <button class="crit-btn" onclick="pick(this,'bad')">✗ Як звичайна вода / БАД</button>
-    </div>
-  </div>
-
-  <div class="crit" data-id="v2" data-weight="1">
-    <div class="crit-q">Використовує аргумент «без NaCl» для кардіологів</div>
-    <div class="crit-hint">«Не затримує рідину — безпечно при гіпертензії, ІХС і кардіальній коморбідності.»</div>
-    <div class="btn-row">
-      <button class="crit-btn" onclick="pick(this,'ok')">✓ Доносить кардіологу</button>
-      <button class="crit-btn" onclick="pick(this,'mid')">~ Не з кардіологом</button>
-      <button class="crit-btn" onclick="pick(this,'bad')">✗ Пропускає аргумент</button>
-    </div>
-  </div>
-
-  <div class="crit" data-id="v3" data-weight="1">
-    <div class="crit-q">Формулює «щодня» — не «курс»</div>
-    <div class="crit-hint">«1 пляшка замість звичайної води щодня. Не курс — звичка. Мозок потребує турботи кожен день.»</div>
-    <div class="btn-row">
-      <button class="crit-btn" onclick="pick(this,'ok')">✓ «Щодня замість води»</button>
-      <button class="crit-btn" onclick="pick(this,'mid')">~ Нейтрально</button>
-      <button class="crit-btn" onclick="pick(this,'bad')">✗ «Курс 30 днів»</button>
-    </div>
-  </div>
-</div>
-
-<!-- БЛОК Г: ДОМОВЛЕНІСТЬ -->
-<div class="block">
-  <div class="block-header">
-    <div class="block-letter" style="background:#FAEEDA;color:#633806;">Г</div>
-    <div>
-      <div class="block-name">Закриття і домовленість</div>
-      <div class="block-sub">Заклик · Якість домовленості</div>
-    </div>
-    <div class="block-score" id="bs-g">—</div>
-  </div>
-
-  <div class="crit" data-id="g1" data-weight="2">
-    <div class="crit-q">МП закриває домовленість — не чекає реакції лікаря</div>
-    <div class="crit-hint">«Давайте домовимось — пацієнтам з когнітивним виснаженням на фоні основного захворювання ви будете рекомендувати Емпаті.»</div>
-    <div class="btn-row">
-      <button class="crit-btn" onclick="pick(this,'ok')">✓ Закриває конкретно</button>
-      <button class="crit-btn" onclick="pick(this,'mid')">~ Слабко / не впевнено</button>
-      <button class="crit-btn" onclick="pick(this,'bad')">✗ Не закриває / чекає</button>
-    </div>
-  </div>
-
-  <div class="crit" data-id="g2" data-weight="2">
-    <div class="crit-q">Якість домовленості лікаря</div>
-    <div class="crit-hint">ОК: «Призначатиму» / «Спробую на 2–3» / «Є в аптеці?». Не ОК: «Подумаю» / «Побачимо».</div>
-    <div class="btn-row">
-      <button class="crit-btn" onclick="pick(this,'ok')">✓ Конкретна домовленість</button>
-      <button class="crit-btn" onclick="pick(this,'mid')">~ «Спробую» без деталей</button>
-      <button class="crit-btn" onclick="pick(this,'bad')">✗ «Подумаю» / без результату</button>
-    </div>
-  </div>
+  <table>
+    <thead><tr><th>Що оцінюємо</th><th>✗ Слабко</th><th>✓ Добре</th><th>Оцінка</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Г1 · Заклик до домовленості<br><span style="font-weight:400;color:var(--muted);font-size:11px;">Вага ×2</span></td>
+        <td class="bad-col">Чекає реакції лікаря. Не закриває. Виходить з «він зацікавився» без конкретики.</td>
+        <td class="ok-col">«Давайте домовимось — пацієнтам з когнітивним виснаженням на фоні основного захворювання ви будете рекомендувати Емпаті.»</td>
+        <td class="choice"><div class="choice-wrap">
+          <button class="cbtn" onclick="ch(this,'g1','ok',2)">✓ Добре</button>
+          <button class="cbtn" onclick="ch(this,'g1','mid',2)">~ Слабко</button>
+          <button class="cbtn" onclick="ch(this,'g1','bad',2)">✗ Не закрив</button>
+        </div></td>
+      </tr>
+      <tr>
+        <td>Г2 · Якість домовленості лікаря<br><span style="font-weight:400;color:var(--muted);font-size:11px;">Вага ×2</span></td>
+        <td class="bad-col">«Подумаю» / «Побачимо» — МП приймає це як результат.</td>
+        <td class="ok-col">«Призначатиму» / «Спробую на 2–3 пацієнтах» / «Є в аптеці?» — конкретна наступна дія лікаря.</td>
+        <td class="choice"><div class="choice-wrap">
+          <button class="cbtn" onclick="ch(this,'g2','ok',2)">✓ Конкретна</button>
+          <button class="cbtn" onclick="ch(this,'g2','mid',2)">~ «Спробую»</button>
+          <button class="cbtn" onclick="ch(this,'g2','bad',2)">✗ «Подумаю»</button>
+        </div></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <!-- РЕЗУЛЬТАТ -->
-<div class="result-block" id="resultBlock">
-  <div class="result-header">Результат оцінки</div>
-  <div class="score-big" id="scoreBig">—</div>
-  <div class="score-label" id="scoreLabel">—</div>
-  <div class="score-bar-wrap"><div class="score-bar-fill" id="scoreBarFill"></div></div>
-  <div class="criteria-summary" id="critSummary"></div>
+<div class="result" id="resultBlock">
+  <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Підсумок візиту</div>
+  <div class="res-top">
+    <div class="res-num" id="resNum">—</div>
+    <div>
+      <div class="res-lbl" id="resLbl">—</div>
+      <div class="res-sub" id="resSub">—</div>
+    </div>
+  </div>
+  <div class="bar-wrap"><div class="bar-fill" id="barFill"></div></div>
+  <div class="grid-sum" id="gridSum"></div>
 </div>
 
 <!-- СПОСТЕРЕЖЕННЯ -->
-<div class="block" style="padding:16px;">
-  <div class="obs-label">Що спрацювало — конкретний момент або аргумент</div>
-  <textarea id="obs_win" placeholder="Наприклад: коли МП запитала «ви бачите що після магнію ефекту на когніцію немає?» — лікар одразу назвав трьох пацієнтів..."></textarea>
-  <div class="obs-label">Що не спрацювало — де МП губився</div>
-  <textarea id="obs_fail" placeholder="Наприклад: при запереченні «є Магне В6» МП почав порівнювати по мг..."></textarea>
-  <div class="obs-label">Фокус розвитку МП на наступний місяць</div>
-  <textarea id="obs_focus" style="min-height:44px" placeholder="Один конкретний навик для відпрацювання..."></textarea>
-  <button class="btn-send" onclick="sendForm()">Надіслати оцінку →</button>
+<div class="obs-wrap">
+  <div class="obs-lbl">Що спрацювало</div>
+  <textarea id="ow" placeholder="Конкретний момент або аргумент що зачепив лікаря..."></textarea>
+  <div class="obs-lbl">Що не спрацювало</div>
+  <textarea id="of" placeholder="Де МП губився або відступив..."></textarea>
+  <div class="obs-lbl">Фокус розвитку МП</div>
+  <textarea id="od" style="min-height:42px" placeholder="Один навик для відпрацювання..."></textarea>
+  <button class="btn-send" onclick="send()">Надіслати оцінку →</button>
   <div class="done-msg" id="doneMsg">Лист відкрито у вашій пошті. Натисніть «Надіслати».</div>
 </div>
 </div>
 
-<div class="progress-wrap">
-  <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
-  <span class="progress-txt" id="progTxt">0 / 10 критеріїв</span>
+<div class="prog-bar-wrap">
+  <div class="prog-bar"><div class="prog-fill" id="pf" style="width:0%"></div></div>
+  <span class="prog-txt" id="pt">0 / 10</span>
 </div>
 
 <script>
-var TOTAL_WEIGHT = 14;
-var answers = {};
+var W=14, A={};
+var LBL={a1:'Механізм ГЕБ',a2:'Когнітивний резерв',a3:'Відповідь на Магне В6',b1:'S-питання',b2:'I-питання',v1:'Категорія',v2:'Аргумент NaCl',v3:'Щоденний фрейм',g1:'Заклик до домовленості',g2:'Якість домовленості'};
+var BLKS={a:['a1','a2','a3'],b:['b1','b2'],v:['v1','v2','v3'],g:['g1','g2']};
+var BLKW={a:6,b:2,v:3,g:4};
 
-var LABELS = {
-  a1:'Механізм ГЕБ', a2:'Когнітивний резерв', a3:'Відповідь на Магне В6',
-  b1:'S-питання', b2:'I-питання',
-  v1:'Категорія', v2:'Аргумент NaCl', v3:'Щоденний фрейм',
-  g1:'Закриття домовленості', g2:'Якість домовленості'
-};
-
-function pick(btn, val) {
-  var crit = btn.closest('.crit');
-  var id = crit.dataset.id;
-  var weight = parseInt(crit.dataset.weight);
-  crit.querySelectorAll('.crit-btn').forEach(function(b){ b.className='crit-btn'; });
-  btn.classList.add('sel-'+val);
-  answers[id] = {val:val, weight:weight};
-  recalc();
+function ch(btn,id,val,w){
+  btn.closest('.choice-wrap').querySelectorAll('.cbtn').forEach(function(b){b.className='cbtn';});
+  btn.classList.add('on-'+val);
+  A[id]={val:val,w:w};
+  calc();
 }
 
-function recalc() {
-  var answered = Object.keys(answers).length;
-  var scored = 0;
-  Object.values(answers).forEach(function(a){
-    if(a.val==='ok') scored += a.weight;
-    else if(a.val==='mid') scored += a.weight*0.5;
+function pts(a){return a.val==='ok'?a.w:a.val==='mid'?a.w*0.5:0;}
+
+function calc(){
+  var done=Object.keys(A).length;
+  var got=0;
+  Object.values(A).forEach(function(a){got+=pts(a);});
+  var pct=got/W;
+  var score=(pct*10).toFixed(1);
+
+  document.getElementById('pf').style.width=(done/10*100)+'%';
+  document.getElementById('pt').textContent=done+' / 10';
+
+  var ts=document.getElementById('topScore');
+  ts.textContent=score+' / 10';
+  ts.className='top-score '+(pct>=0.8?'g':pct>=0.5?'m':'b');
+
+  ['a','b','v','g'].forEach(function(bl){
+    var ids=BLKS[bl], mw=BLKW[bl], g=0, d=0;
+    ids.forEach(function(id){if(A[id]){g+=pts(A[id]);d++;}});
+    var el=document.getElementById('bp-'+bl);
+    if(!d){el.textContent='—';el.style.color='var(--hint)';return;}
+    var p=g/mw;
+    el.textContent=Math.round(p*100)+'%';
+    el.style.color=p>=0.8?'var(--ac)':p>=0.5?'var(--amb)':'var(--red)';
   });
-  var pct = TOTAL_WEIGHT > 0 ? scored/TOTAL_WEIGHT : 0;
-  var score = Math.round(pct*10*10)/10;
 
-  document.getElementById('progFill').style.width = (answered/10*100)+'%';
-  document.getElementById('progTxt').textContent = answered+' / 10 критеріїв';
-
-  var pillEl = document.getElementById('topScore');
-  pillEl.textContent = Math.round(score*10)/10 + ' / 10';
-  pillEl.className = 'score-pill ' + (pct>=0.8?'s-good':pct>=0.5?'s-mid':'s-bad');
-
-  updateBlockScore('a',['a1','a2','a3'],6);
-  updateBlockScore('b',['b1','b2'],3);
-  updateBlockScore('v',['v1','v2','v3'],3);
-  updateBlockScore('g',['g1','g2'],4);
-
-  if(answered >= 10) showResult(score, pct);
-  else document.getElementById('resultBlock').classList.remove('vis');
+  if(done>=10) showResult(score,pct,got);
+  else document.getElementById('resultBlock').style.display='none';
 }
 
-function updateBlockScore(block, ids, maxW) {
-  var got=0, total=0;
-  ids.forEach(function(id){
-    if(answers[id]){
-      total++;
-      var a=answers[id];
-      got += a.val==='ok'?a.weight : a.val==='mid'?a.weight*0.5:0;
-    }
-  });
-  var el = document.getElementById('bs-'+block);
-  if(total===0){el.textContent='—';return;}
-  var pct=got/maxW;
-  el.textContent = Math.round(pct*100)+'%';
-  el.style.color = pct>=0.8?'var(--ac)':pct>=0.5?'var(--amber)':'var(--red)';
-}
-
-function showResult(score, pct) {
-  var rb = document.getElementById('resultBlock');
-  rb.classList.add('vis');
-  var sb = document.getElementById('scoreBig');
-  var sl = document.getElementById('scoreLabel');
-  var bf = document.getElementById('scoreBarFill');
-  var cls = pct>=0.8?'score-good':pct>=0.5?'score-mid':'score-bad';
-  var lbl = pct>=0.8?'Сильний візит':'МП готовий до роботи':pct>=0.5?'Базовий рівень — є зони розвитку':'Потребує відпрацювання';
-  if(pct>=0.8) lbl='Сильний візит — МП готовий до роботи';
-  else if(pct>=0.5) lbl='Базовий рівень — є зони розвитку';
-  else lbl='Потребує відпрацювання скриптів';
-  sb.textContent = score.toFixed(1);
-  sb.className = 'score-big '+cls;
-  sl.textContent = lbl;
-  sl.className = 'score-label '+cls;
-  bf.style.width = (pct*100)+'%';
-  bf.style.background = pct>=0.8?'var(--ac-mid)':pct>=0.5?'var(--amber-mid)':'var(--red-mid)';
-
-  var cs = document.getElementById('critSummary');
-  cs.innerHTML = '';
-  Object.keys(answers).forEach(function(id){
-    var a=answers[id];
-    var cls2 = a.val==='ok'?'ok':a.val==='mid'?'warn':'bad';
-    var icon = a.val==='ok'?'✓':a.val==='mid'?'~':'✗';
-    cs.innerHTML += '<div class="sum-item '+cls2+'"><strong>'+LABELS[id]+'</strong>'+icon+' '+(a.val==='ok'?'ОК':a.val==='mid'?'Частково':'Слабко')+'</div>';
+function showResult(score,pct,got){
+  var rb=document.getElementById('resultBlock');
+  rb.classList.add('vis');rb.style.display='block';
+  var cls=pct>=0.8?'g':pct>=0.5?'m':'b';
+  var lbl=pct>=0.8?'Сильний візит':pct>=0.5?'Базовий рівень':'Потребує відпрацювання';
+  var sub=pct>=0.8?'МП готовий до самостійної роботи':pct>=0.5?'Є чіткі зони розвитку':'Скрипти потрібно відпрацювати на ТВ';
+  var rn=document.getElementById('resNum');
+  rn.textContent=score;rn.className='res-num '+cls;
+  var rl=document.getElementById('resLbl');
+  rl.textContent=lbl;rl.className='res-lbl '+cls;
+  document.getElementById('resSub').textContent=sub;
+  var bf=document.getElementById('barFill');
+  bf.style.width=(pct*100)+'%';
+  bf.style.background=pct>=0.8?'var(--ac-mid)':pct>=0.5?'var(--amb-mid)':'var(--red-mid)';
+  var gs=document.getElementById('gridSum');
+  gs.innerHTML='';
+  Object.keys(LBL).forEach(function(id){
+    if(!A[id])return;
+    var v=A[id].val;
+    var c=v==='ok'?'ok':v==='mid'?'mid':'bad';
+    var icon=v==='ok'?'✓':v==='mid'?'~':'✗';
+    var txt=v==='ok'?'ОК':v==='mid'?'Частково':'Слабко';
+    gs.innerHTML+='<div class="si '+c+'"><strong>'+LBL[id]+'</strong>'+icon+' '+txt+'</div>';
   });
 }
 
-function gv(id){return (document.getElementById(id)||{}).value||'';}
-
-function sendForm(){
+function gv(id){return(document.getElementById(id)||{}).value||'';}
+function send(){
   var rm=gv('rm'),mp=gv('mp'),dt=gv('dt');
-  var score=document.getElementById('topScore').textContent;
-  var lines=['ТВ-ОЦІНКА МП · ЕМПАТІ','РМ: '+rm+' | МП: '+mp+' | Дата: '+dt,'Оцінка: '+score,''];
-  lines.push('=== КРИТЕРІЇ ===');
-  Object.keys(answers).forEach(function(id){
-    var a=answers[id];
-    var v=a.val==='ok'?'ОК':a.val==='mid'?'Частково':'Слабко';
-    lines.push(LABELS[id]+': '+v);
+  var sc=document.getElementById('topScore').textContent;
+  var lines=['ТВ-ОЦІНКА МП · ЕМПАТІ','РМ: '+rm+' | МП: '+mp+' | Дата: '+dt,'Загальна оцінка: '+sc,''];
+  lines.push('КРИТЕРІЇ:');
+  Object.keys(LBL).forEach(function(id){
+    if(A[id]){var v=A[id].val;lines.push(LBL[id]+': '+(v==='ok'?'ОК':v==='mid'?'Частково':'Слабко'));}
   });
-  lines.push('');
-  lines.push('Що спрацювало:');lines.push(gv('obs_win'));
-  lines.push('Що не спрацювало:');lines.push(gv('obs_fail'));
-  lines.push('Фокус розвитку:');lines.push(gv('obs_focus'));
-  var subj=encodeURIComponent('ТВ-Оцінка МП Емпаті · '+mp+' · '+rm+' · '+dt);
-  var body=encodeURIComponent(lines.join('\n'));
-  window.location.href='mailto:oleksii.shapravskyi@uf.ua?subject='+subj+'&body='+body;
+  lines.push('','Що спрацювало: '+gv('ow'),'Що не спрацювало: '+gv('of'),'Фокус розвитку: '+gv('od'));
+  window.location.href='mailto:oleksii.shapravskyi@uf.ua?subject='+encodeURIComponent('ТВ-Оцінка МП Емпаті · '+mp+' · '+rm+' · '+dt)+'&body='+encodeURIComponent(lines.join('\n'));
   document.querySelector('.btn-send').style.display='none';
   document.getElementById('doneMsg').style.display='block';
 }
