@@ -1,414 +1,266 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Емпаті · Оцінка МП · ТВ-візит</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Оцінка МП — ТВ-візит Емпаті</title>
+
 <style>
-:root{
-  --bg:#F0F2F5;--surf:#FFF;--border:rgba(0,0,0,.08);
-  --text:#1A1A18;--muted:#6B6B67;--hint:#B0B0AA;
-  --ac:#0F6E56;--ac-bg:#E1F5EE;--ac-mid:#1D9E75;
-  --red:#C93535;--red-bg:#FCEBEB;--red-mid:#E24B4A;
-  --amb:#B87010;--amb-bg:#FEF3E2;--amb-mid:#EF9F27;
-  --rl:12px;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-html{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);font-size:14px;line-height:1.5;}
-body{padding:0 0 70px;}
+    body{
+        font-family: Arial, sans-serif;
+        background:#f4f6f9;
+        margin:0;
+        padding:20px;
+        color:#1f2937;
+    }
 
-.topbar{background:var(--surf);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06);}
-.tl{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.07em;color:var(--muted);text-transform:uppercase;}
-.top-score{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;padding:4px 12px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--muted);transition:all .3s;}
-.top-score.g{background:var(--ac-bg);border-color:var(--ac-mid);color:var(--ac);}
-.top-score.m{background:var(--amb-bg);border-color:var(--amb-mid);color:var(--amb);}
-.top-score.b{background:var(--red-bg);border-color:var(--red-mid);color:var(--red);}
+    .container{
+        max-width:1100px;
+        margin:auto;
+    }
 
-.wrap{max-width:720px;margin:0 auto;padding:0 14px;}
-.hero{padding:22px 0 16px;}
-.hero h1{font-size:20px;font-weight:500;margin-bottom:3px;}
-.hero p{font-size:12px;color:var(--muted);}
+    h1{
+        text-align:center;
+        color:#1e3a8a;
+        margin-bottom:30px;
+    }
 
-.meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;}
-.fl label{display:block;font-size:10px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
-.fl input{width:100%;font-size:13px;font-family:'DM Sans',sans-serif;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surf);color:var(--text);outline:none;}
-.fl input:focus{border-color:var(--ac-mid);}
+    .block{
+        background:#fff;
+        border-radius:14px;
+        padding:20px;
+        margin-bottom:24px;
+        box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    }
 
-.goal{background:#EAF5F0;border:1px solid #A8D5C5;border-radius:var(--rl);padding:10px 13px;margin-bottom:18px;font-size:12px;color:#085041;line-height:1.6;}
-.goal strong{font-weight:500;}
+    .block-title{
+        font-size:22px;
+        font-weight:700;
+        margin-bottom:20px;
+        color:#0f172a;
+    }
 
-/* BLOCK */
-.blk{background:var(--surf);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);}
-.blk-head{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#FAFAFA;border-bottom:1px solid var(--border);}
-.blk-ico{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;flex-shrink:0;}
-.blk-name{font-size:13px;font-weight:500;}
-.blk-sub{font-size:11px;color:var(--muted);}
-.blk-pct{margin-left:auto;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--hint);transition:color .3s;}
+    .criterion{
+        border:1px solid #e5e7eb;
+        border-radius:12px;
+        padding:16px;
+        margin-bottom:16px;
+    }
 
-/* CRITERIA ROW */
-.crit-row{border-top:0.5px solid var(--border);padding:14px 14px 12px;}
-.crit-row:first-child{border-top:none;}
-.crit-row.sel-ok{background:#F2FCF7;}
-.crit-row.sel-mid{background:#FFFBF2;}
-.crit-row.sel-bad{background:#FFF8F8;}
+    .criterion-title{
+        font-size:17px;
+        font-weight:700;
+        margin-bottom:12px;
+    }
 
-.crit-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:8px;}
-.crit-weight{font-size:10px;font-weight:400;color:var(--hint);margin-left:6px;}
+    .desc{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:14px;
+        margin-bottom:14px;
+    }
 
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
-.col-bad{background:#FEF8F8;border:0.5px solid #F5C4C4;border-radius:8px;padding:8px 10px;font-size:12px;color:#A32D2D;line-height:1.5;}
-.col-ok{background:#F4FCF8;border:0.5px solid #A8D5C5;border-radius:8px;padding:8px 10px;font-size:12px;color:#085041;line-height:1.5;}
-.col-label{font-size:10px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px;opacity:.7;}
+    .bad{
+        background:#fef2f2;
+        border-left:5px solid #dc2626;
+        padding:12px;
+        border-radius:8px;
+    }
 
-/* CHOICE BUTTONS */
-.btn-row{display:flex;gap:6px;}
-.cbtn{flex:1;padding:7px 4px;border-radius:8px;border:1.5px solid var(--border);font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;user-select:none;background:var(--bg);font-family:'DM Sans',sans-serif;text-align:center;}
-.cbtn:hover{border-color:var(--hint);background:var(--surf);}
-.cbtn.on-ok{background:var(--ac-bg);border-color:var(--ac-mid);color:var(--ac);}
-.cbtn.on-mid{background:var(--amb-bg);border-color:var(--amb-mid);color:var(--amb);}
-.cbtn.on-bad{background:var(--red-bg);border-color:var(--red-mid);color:var(--red);}
+    .good{
+        background:#ecfdf5;
+        border-left:5px solid #16a34a;
+        padding:12px;
+        border-radius:8px;
+    }
 
-/* RESULT */
-.result{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:10px;display:none;box-shadow:0 1px 3px rgba(0,0,0,.04);}
-.result.vis{display:block;}
-.res-top{display:flex;align-items:flex-end;gap:14px;margin-bottom:12px;}
-.res-num{font-size:52px;font-weight:300;line-height:1;letter-spacing:-.03em;}
-.res-num.g{color:var(--ac);}
-.res-num.m{color:var(--amb);}
-.res-num.b{color:var(--red);}
-.res-lbl{font-size:14px;font-weight:500;}
-.res-lbl.g{color:var(--ac);}
-.res-lbl.m{color:var(--amb);}
-.res-lbl.b{color:var(--red);}
-.res-sub{font-size:12px;color:var(--muted);margin-top:2px;}
-.bar-wrap{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;margin-bottom:14px;}
-.bar-fill{height:100%;border-radius:3px;transition:width .6s ease;}
-.grid-sum{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
-.si{padding:7px 9px;border-radius:7px;font-size:11px;line-height:1.4;}
-.si strong{font-weight:500;display:block;font-size:10px;margin-bottom:1px;text-transform:uppercase;letter-spacing:.03em;}
-.si.ok{background:var(--ac-bg);color:var(--ac);}
-.si.mid{background:var(--amb-bg);color:var(--amb);}
-.si.bad{background:var(--red-bg);color:var(--red);}
+    .label{
+        font-weight:700;
+        margin-bottom:6px;
+    }
 
-/* OBS */
-.obs-wrap{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
-.obs-lbl{font-size:10px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;margin-top:10px;}
-.obs-lbl:first-child{margin-top:0;}
-textarea{width:100%;font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 11px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);resize:vertical;min-height:52px;outline:none;line-height:1.6;transition:border-color .15s;}
-textarea:focus{border-color:var(--ac-mid);}
-.btn-send{width:100%;padding:11px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:#fff;background:var(--ac);border:none;border-radius:9px;cursor:pointer;margin-top:10px;}
-.btn-send:hover{opacity:.88;}
-.done-msg{display:none;padding:12px;background:var(--ac-bg);border:1px solid var(--ac-mid);border-radius:9px;text-align:center;font-size:12px;color:var(--ac);margin-top:8px;}
+    .buttons{
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+    }
 
-.prog-bar-wrap{position:fixed;bottom:0;left:0;right:0;background:var(--surf);border-top:1px solid var(--border);padding:9px 18px;display:flex;align-items:center;gap:11px;box-shadow:0 -1px 5px rgba(0,0,0,.06);}
-.prog-bar{flex:1;height:3px;background:var(--bg);border-radius:2px;overflow:hidden;}
-.prog-fill{height:100%;background:var(--ac-mid);border-radius:2px;transition:width .3s;}
-.prog-txt{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
+    .btn{
+        border:none;
+        padding:10px 16px;
+        border-radius:10px;
+        cursor:pointer;
+        font-size:15px;
+        font-weight:700;
+        transition:0.2s;
+    }
+
+    .good-btn{ background:#dcfce7; color:#166534; }
+    .partial-btn{ background:#fef9c3; color:#854d0e; }
+    .bad-btn{ background:#fee2e2; color:#991b1b; }
+
+    .btn.active{
+        transform:scale(1.04);
+        box-shadow:0 0 0 3px rgba(59,130,246,0.35);
+    }
+
+    #summary{
+        display:none;
+        background:#fff;
+        border-radius:14px;
+        padding:24px;
+        margin-top:24px;
+        box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .score{ font-size:34px; font-weight:800; margin-bottom:12px; }
+    .verdict{ font-size:20px; font-weight:700; margin-bottom:20px; }
+    .excellent{ color:#15803d; }
+    .medium{ color:#ca8a04; }
+    .weak{ color:#dc2626; }
+
+    .result-item{
+        padding:10px;
+        border-bottom:1px solid #e5e7eb;
+        font-size:14px;
+    }
+
+    .development{
+        background:#fff7ed;
+        border-left:5px solid #f97316;
+        padding:14px;
+        border-radius:10px;
+        margin-top:10px;
+        font-size:14px;
+    }
+
+    .send-btn{
+        margin-top:24px;
+        background:#2563eb;
+        color:white;
+        border:none;
+        padding:14px 22px;
+        border-radius:12px;
+        font-size:16px;
+        font-weight:700;
+        cursor:pointer;
+        width:100%;
+    }
+    .send-btn:hover{ background:#1d4ed8; }
+
+    @media(max-width:768px){
+        .desc{ grid-template-columns:1fr; }
+        .buttons{ flex-direction:column; }
+        .btn{ width:100%; text-align:center; }
+    }
 </style>
 </head>
+
 <body>
+<div class="container">
 
-<div class="topbar">
-  <span class="tl">ЮРіЯ-ФАРМ · ТВ-Візит · Емпаті</span>
-  <span class="top-score" id="topScore">0 / 10</span>
+<h1>Оцінка МП — ТВ-візит Емпаті</h1>
+
+<div id="content"></div>
+
+<div id="summary">
+    <div class="score" id="score"></div>
+    <div class="verdict" id="verdict"></div>
+    <h3>Підсумок по критеріях</h3>
+    <div id="results"></div>
+    <h3 style="margin-top:24px;">Зони розвитку</h3>
+    <div id="development"></div>
+    <button class="send-btn" onclick="sendEmail()">📧 Надіслати оцінку</button>
 </div>
 
-<div class="wrap">
-<div class="hero">
-  <h1>Оцінка МП · Емпаті</h1>
-  <p>Натисни кнопку в кожному рядку — оцінка порахується автоматично</p>
-</div>
-
-<div class="meta">
-  <div class="fl"><label>РМ</label><input type="text" id="rm" placeholder="Прізвище"></div>
-  <div class="fl"><label>МП</label><input type="text" id="mp" placeholder="Прізвище МП"></div>
-  <div class="fl"><label>Дата</label><input type="date" id="dt"></div>
-</div>
-
-<div class="goal"><strong>Ціль на візит:</strong> домовитись про рекомендацію Емпаті як щоденного рішення пацієнтам із когнітивним виснаженням на фоні основного захворювання — як доповнення до базової терапії.</div>
-
-<!-- БЛОК А -->
-<div class="blk">
-  <div class="blk-head">
-    <div class="blk-ico" style="background:#E1F5EE;color:#0F6E56;">А</div>
-    <div><div class="blk-name">Молекула і механізм</div><div class="blk-sub">L-треонат · ГЕБ · когнітивний резерв</div></div>
-    <div class="blk-pct" id="bp-a">—</div>
-  </div>
-
-  <div class="crit-row" id="row-a1">
-    <div class="crit-name">А1 · Механізм L-треонату і ГЕБ <span class="crit-weight">вага ×2</span></div>
-    <div class="two-col">
-      <div class="col-bad"><div class="col-label">✗ Слабко</div>Каже «кращий магній» без пояснення. Не згадує ГЕБ. Губиться коли лікар уточнює.</div>
-      <div class="col-ok"><div class="col-label">✓ Добре</div>«L-треонат — єдина форма що долає ГЕБ і накопичується в нейронах. Цитрат і оксид не проходять.»</div>
-    </div>
-    <div class="btn-row">
-      <button class="cbtn" onclick="ch(this,'a1','ok',2)">✓ Добре</button>
-      <button class="cbtn" onclick="ch(this,'a1','mid',2)">~ Частково</button>
-      <button class="cbtn" onclick="ch(this,'a1','bad',2)">✗ Слабко</button>
-    </div>
-  </div>
-
-  <div class="crit-row" id="row-a2">
-    <div class="crit-name">А2 · Когнітивний резерв — не «стрес і нерви» <span class="crit-weight">вага ×2</span></div>
-    <div class="two-col">
-      <div class="col-bad"><div class="col-label">✗ Слабко</div>Говорить через стрес / заспокоєння. Заходить у чуже поле.</div>
-      <div class="col-ok"><div class="col-label">✓ Добре</div>«Основне захворювання + стрес знижують Mg саме в мозку. Аналіз Mg у крові не відображає дефіцит у ЦНС.»</div>
-    </div>
-    <div class="btn-row">
-      <button class="cbtn" onclick="ch(this,'a2','ok',2)">✓ Добре</button>
-      <button class="cbtn" onclick="ch(this,'a2','mid',2)">~ Частково</button>
-      <button class="cbtn" onclick="ch(this,'a2','bad',2)">✗ Слабко</button>
-    </div>
-  </div>
-
-  <div class="crit-row" id="row-a3">
-    <div class="crit-name">А3 · Відповідь на «є Магне В6» <span class="crit-weight">вага ×2</span></div>
-    <div class="two-col">
-      <div class="col-bad"><div class="col-label">✗ Слабко</div>Порівнює по мг. Каже «L-треонат кращий» без різниці мішеней. Програє аргумент.</div>
-      <div class="col-ok"><div class="col-label">✓ Добре</div>«Магне В6 — стрес і периферія. Емпаті — мозок локально через ГЕБ. Різні мішені, не конкуренти.»</div>
-    </div>
-    <div class="btn-row">
-      <button class="cbtn" onclick="ch(this,'a3','ok',2)">✓ Добре</button>
-      <button class="cbtn" onclick="ch(this,'a3','mid',2)">~ Частково</button>
-      <button class="cbtn" onclick="ch(this,'a3','bad',2)">✗ Слабко</button>
-    </div>
-  </div>
-</div>
-
-<!-- БЛОК Б -->
-<div class="blk">
-  <div class="blk-head">
-    <div class="blk-ico" style="background:#E6F1FB;color:#185FA5;">Б</div>
-    <div><div class="blk-name">SPIN — вхід у тему</div><div class="blk-sub">Ситуація · Проблема · Наслідки · Рішення</div></div>
-    <div class="blk-pct" id="bp-b">—</div>
-  </div>
-
-  <div class="crit-row" id="row-b1">
-    <div class="crit-name">Б1 · S-питання — через когніцію на фоні захворювання</div>
-    <div class="two-col">
-      <div class="col-bad"><div class="col-label">✗ Слабко</div>Питає про стрес і нерви. Або одразу до продукту без питань.</div>
-      <div class="col-ok"><div class="col-label">✓ Добре</div>«У ваших пацієнтів є скарги на зниження пам'яті, концентрацію, розумову втому на фоні основного захворювання?»</div>
-    </div>
-    <div class="btn-row">
-      <button class="cbtn" onclick="ch(this,'b1','ok',1)">✓ Добре</button>
-      <button class="cbtn" onclick="ch(this,'b1','mid',1)">~ Частково</button>
-      <button class="cbtn" onclick="ch(this,'b1','bad',1)">✗ Слабко</button>
-    </div>
-  </div>
-
-  <div class="crit-row" id="row-b2">
-    <div class="crit-name">Б2 · I-питання — чекає відповіді лікаря</div>
-    <div class="two-col">
-      <div class="col-bad"><div class="col-label">✗ Слабко</div>Не дає лікарю часу відповісти. Переходить до презентації до того як лікар назвав проблему.</div>
-      <div class="col-ok"><div class="col-label">✓ Добре</div>«Ви призначаєте магній? І як часто бачите що ефекту на когніцію немає?» — лікар сам підтверджує проблему.</div>
-    </div>
-    <div class="btn-row">
-      <button class="cbtn" onclick="ch(this,'b2','ok',1)">✓ Добре</button>
-      <button class="cbtn" onclick="ch(this,'b2','mid',1)">~ Частково</button>
-      <button class="cbtn" onclick="ch(this,'b2','bad',1)">✗ Слабко</button>
-    </div>
-  </div>
-</div>
-
-<!-- БЛОК В -->
-<div class="blk">
-  <div class="blk-head">
-    <div class="blk-ico" style="background:#EEF0FE;color:#534AB7;">В</div>
-    <div><div class="blk-name">Презентація продукту</div><div class="blk-sub">Категорія · NaCl · щоденний фрейм</div></div>
-    <div class="blk-pct" id="bp-v">—</div>
-  </div>
-
-  <div class="crit-row" id="row-v1">
-    <div class="crit-name">В1 · Категорія «розумна гідратація»</div>
-    <div class="two-col">
-      <div class="col-bad"><div class="col-label">✗ Слабко</div>Презентує як «воду з магнієм». Лікар сприймає як Магне В6 у рідкій формі.</div>
-      <div class="col-ok"><div class="col-label">✓ Добре</div>«50% добової норми L-треонату + фізіологічна гідратація. Закриває дефіцит Mg у мозку і дегідратацію одночасно.»</div>
-    </div>
-    <div class="btn-row">
-      <button class="cbtn" onclick="ch(this,'v1','ok',1)">✓ Добре</button>
-      <button class="cbtn" onclick="ch(this,'v1','mid',1)">~ Частково</button>
-      <button class="cbtn" onclick="ch(this,'v1','bad',1)">✗ Слабко</button>
-    </div>
-  </div>
-
-  <div class="crit-row" id="row-v2">
-    <div class="crit-name">В2 · Аргумент «без NaCl» для кардіологів</div>
-    <div class="two-col">
-      <div class="col-bad"><div class="col-label">✗ Пропускає</div>Не використовує аргумент з кардіологом. Втрачає нішу.</div>
-      <div class="col-ok"><div class="col-label">✓ Добре</div>«Не затримує рідину — безпечно при гіпертензії, ІХС та кардіальній коморбідності.»</div>
-    </div>
-    <div class="btn-row">
-      <button class="cbtn" onclick="ch(this,'v2','ok',1)">✓ Добре</button>
-      <button class="cbtn" onclick="ch(this,'v2','mid',1)">~ Н/А</button>
-      <button class="cbtn" onclick="ch(this,'v2','bad',1)">✗ Пропустив</button>
-    </div>
-  </div>
-
-  <div class="crit-row" id="row-v3">
-    <div class="crit-name">В3 · «Щодня» замість «курс»</div>
-    <div class="two-col">
-      <div class="col-bad"><div class="col-label">✗ Слабко</div>Говорить «курс 30 днів» — лікар одразу порівнює вартість з таблетками.</div>
-      <div class="col-ok"><div class="col-label">✓ Добре</div>«1 пляшка замість звичайної води щодня. Не курс — звичка. Мозок потребує турботи кожен день.»</div>
-    </div>
-    <div class="btn-row">
-      <button class="cbtn" onclick="ch(this,'v3','ok',1)">✓ Добре</button>
-      <button class="cbtn" onclick="ch(this,'v3','mid',1)">~ Частково</button>
-      <button class="cbtn" onclick="ch(this,'v3','bad',1)">✗ «Курс»</button>
-    </div>
-  </div>
-</div>
-
-<!-- БЛОК Г -->
-<div class="blk">
-  <div class="blk-head">
-    <div class="blk-ico" style="background:#FEF3E2;color:#633806;">Г</div>
-    <div><div class="blk-name">Закриття і домовленість</div><div class="blk-sub">Заклик · якість результату</div></div>
-    <div class="blk-pct" id="bp-g">—</div>
-  </div>
-
-  <div class="crit-row" id="row-g1">
-    <div class="crit-name">Г1 · Заклик до домовленості <span class="crit-weight">вага ×2</span></div>
-    <div class="two-col">
-      <div class="col-bad"><div class="col-label">✗ Слабко</div>Чекає реакції лікаря. Не закриває. Виходить з «він зацікавився» без конкретики.</div>
-      <div class="col-ok"><div class="col-label">✓ Добре</div>«Давайте домовимось — пацієнтам з когнітивним виснаженням на фоні основного захворювання ви будете рекомендувати Емпаті.»</div>
-    </div>
-    <div class="btn-row">
-      <button class="cbtn" onclick="ch(this,'g1','ok',2)">✓ Добре</button>
-      <button class="cbtn" onclick="ch(this,'g1','mid',2)">~ Слабко</button>
-      <button class="cbtn" onclick="ch(this,'g1','bad',2)">✗ Не закрив</button>
-    </div>
-  </div>
-
-  <div class="crit-row" id="row-g2">
-    <div class="crit-name">Г2 · Якість домовленості лікаря <span class="crit-weight">вага ×2</span></div>
-    <div class="two-col">
-      <div class="col-bad"><div class="col-label">✗ Не ОК</div>«Подумаю» / «Побачимо» — МП приймає це як результат.</div>
-      <div class="col-ok"><div class="col-label">✓ ОК</div>«Призначатиму» / «Спробую на 2–3 пацієнтах» / «Є в аптеці?» — конкретна наступна дія лікаря.</div>
-    </div>
-    <div class="btn-row">
-      <button class="cbtn" onclick="ch(this,'g2','ok',2)">✓ Конкретна</button>
-      <button class="cbtn" onclick="ch(this,'g2','mid',2)">~ «Спробую»</button>
-      <button class="cbtn" onclick="ch(this,'g2','bad',2)">✗ «Подумаю»</button>
-    </div>
-  </div>
-</div>
-
-<!-- РЕЗУЛЬТАТ -->
-<div class="result" id="resultBlock">
-  <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Підсумок візиту</div>
-  <div class="res-top">
-    <div class="res-num" id="resNum">—</div>
-    <div>
-      <div class="res-lbl" id="resLbl">—</div>
-      <div class="res-sub" id="resSub">—</div>
-    </div>
-  </div>
-  <div class="bar-wrap"><div class="bar-fill" id="barFill"></div></div>
-  <div class="grid-sum" id="gridSum"></div>
-</div>
-
-<!-- СПОСТЕРЕЖЕННЯ -->
-<div class="obs-wrap">
-  <div class="obs-lbl">Що спрацювало</div>
-  <textarea id="ow" placeholder="Конкретний момент або аргумент що зачепив лікаря..."></textarea>
-  <div class="obs-lbl">Що не спрацювало</div>
-  <textarea id="of" placeholder="Де МП губився або відступив..."></textarea>
-  <div class="obs-lbl">Фокус розвитку МП</div>
-  <textarea id="od" style="min-height:42px" placeholder="Один навик для відпрацювання..."></textarea>
-  <button class="btn-send" onclick="send()">Надіслати оцінку →</button>
-  <div class="done-msg" id="doneMsg">Лист відкрито у вашій пошті. Натисніть «Надіслати».</div>
-</div>
-</div>
-
-<div class="prog-bar-wrap">
-  <div class="prog-bar"><div class="prog-fill" id="pf" style="width:0%"></div></div>
-  <span class="prog-txt" id="pt">0 / 10</span>
 </div>
 
 <script>
-var W=14,A={};
-var LBL={a1:'Механізм ГЕБ',a2:'Когнітивний резерв',a3:'Відповідь на Магне В6',b1:'S-питання',b2:'I-питання',v1:'Категорія',v2:'Аргумент NaCl',v3:'Щоденний фрейм',g1:'Заклик до домовленості',g2:'Якість домовленості'};
-var BLKS={a:['a1','a2','a3'],b:['b1','b2'],v:['v1','v2','v3'],g:['g1','g2']};
-var BLKW={a:6,b:2,v:3,g:4};
+const criteria = [
+  { block:"А · Молекула і механізм", title:"А1 · Пояснює механізм L-треонату і ГЕБ", bad:"Каже «кращий магній» без пояснення. Не згадує ГЕБ. Губиться коли лікар уточнює.", good:"«L-треонат — єдина форма що долає ГЕБ і накопичується в нейронах. Цитрат і оксид не проходять — вони для м'язів і серця.»", rec:"Відпрацювати одне речення про ГЕБ без CLM. МП має вміти сказати це без підказки." },
+  { block:"А · Молекула і механізм", title:"А2 · Когнітивний резерв — не «стрес і нерви»", bad:"Говорить через стрес / заспокоєння. Заходить у чуже поле.", good:"«Основне захворювання + стрес знижують Mg саме в мозку. Аналіз Mg у крові не відображає дефіцит у ЦНС.»", rec:"Відпрацювати вхід через «когнітивний резерв на фоні основного захворювання» — не через стрес." },
+  { block:"А · Молекула і механізм", title:"А3 · Відповідь на «є Магне В6»", bad:"Порівнює по мг. Каже «L-треонат кращий» без різниці мішеней. Програє аргумент.", good:"«Магне В6 — стрес і периферія. Емпаті — мозок локально через ГЕБ. Різні мішені, не конкуренти.»", rec:"Відпрацювати скрипт відповіді на Магне В6 — аргумент різниці мішеней, без порівняння по мг." },
+  { block:"А · Молекула і механізм", title:"А4 · Базова терапія не закриває дефіцит Mg у мозку", bad:"Не використовує аргумент. Не пояснює чому лікування основного захворювання не відновлює когнітивний резерв.", good:"«Ви контролюєте основне захворювання — але хронічна втома і стрес залишаються. На цьому фоні Mg у мозку знижений. Емпаті закриває саме це.»", rec:"Відпрацювати аргумент про незакритий дефіцит Mg у мозку попри базову терапію." },
+  { block:"Б · SPIN — вхід у тему", title:"Б1 · S-питання через когніцію на фоні захворювання", bad:"Питає про стрес і нерви. Або одразу до продукту без питань.", good:"«У ваших пацієнтів є скарги на зниження пам'яті, концентрацію, розумову втому на фоні основного захворювання?»", rec:"Тренувати S-питання через когніцію і основне захворювання — не через загальний стрес." },
+  { block:"Б · SPIN — вхід у тему", title:"Б2 · I-питання — чекає відповіді лікаря", bad:"Не дає лікарю часу відповісти. Переходить до презентації до того як лікар назвав проблему.", good:"«Ви призначаєте магній? І як часто бачите що ефекту на когніцію немає?» — лікар сам підтверджує проблему.", rec:"Відпрацювати паузу після I-питання. МП має чекати поки лікар сам назве проблему." },
+  { block:"В · Презентація продукту", title:"В1 · Категорія «розумна гідратація»", bad:"Презентує як «воду з магнієм». Лікар сприймає як Магне В6 у рідкій формі.", good:"«50% добової норми L-треонату + фізіологічна гідратація. Закриває дефіцит Mg у мозку і дегідратацію одночасно.»", rec:"Відпрацювати формулювання нової категорії — «розумна гідратація» як відмінна від звичайного магнію." },
+  { block:"В · Презентація продукту", title:"В2 · Аргумент «без NaCl» для кардіологів", bad:"Не використовує аргумент з кардіологом. Пропускає нішу.", good:"«Не затримує рідину — безпечно при гіпертензії, ІХС та кардіальній коморбідності.»", rec:"Включити аргумент NaCl у скрипт для кардіологів. МП втрачає важливу нішу не використовуючи його." },
+  { block:"В · Презентація продукту", title:"В3 · «Щодня» замість «курс»", bad:"Говорить «курс 30 днів» — лікар одразу порівнює вартість з таблетками.", good:"«1 пляшка замість звичайної води щодня. Не курс — звичка. Мозок потребує турботи кожен день.»", rec:"Відпрацювати фрейм «щоденна звичка» — не курс. Після «курсу» лікар порівнює ціну і програємо." },
+  { block:"Г · Закриття і домовленість", title:"Г1 · Заклик до домовленості", bad:"Чекає реакції лікаря. Не закриває. Виходить з «він зацікавився» без конкретики.", good:"«Давайте домовимось — пацієнтам з когнітивним виснаженням на фоні основного захворювання ви будете рекомендувати Емпаті.»", rec:"Відпрацювати закриття домовленості — МП має конкретно формулювати заклик, не чекати реакції лікаря." },
+  { block:"Г · Закриття і домовленість", title:"Г2 · Якість домовленості лікаря", bad:"«Подумаю» / «Побачимо» — МП приймає це як результат.", good:"«Призначатиму» / «Спробую на 2–3 пацієнтах» / «Є в аптеці?» — конкретна наступна дія лікаря.", rec:"МП не повинен приймати «подумаю» як домовленість. Відпрацювати що робити далі — уточнювати або повторювати заклик." }
+];
 
-function ch(btn,id,val,w){
-  var row=document.getElementById('row-'+id);
-  row.querySelectorAll('.cbtn').forEach(function(b){b.className='cbtn';});
-  btn.classList.add('on-'+val);
-  row.className='crit-row sel-'+val;
-  A[id]={val:val,w:w};
-  calc();
+const answers = {};
+const grouped = {};
+criteria.forEach((c,i)=>{ if(!grouped[c.block])grouped[c.block]=[]; grouped[c.block].push({...c,index:i}); });
+
+const content = document.getElementById("content");
+for(const block in grouped){
+  const d = document.createElement("div");
+  d.className="block";
+  d.innerHTML=`<div class="block-title">${block}</div>`;
+  grouped[block].forEach(c=>{
+    d.innerHTML+=`
+    <div class="criterion" id="crit-${c.index}">
+      <div class="criterion-title">${c.title}</div>
+      <div class="desc">
+        <div class="bad"><div class="label">✗ Слабко</div>${c.bad}</div>
+        <div class="good"><div class="label">✓ Добре</div>${c.good}</div>
+      </div>
+      <div class="buttons">
+        <button class="btn good-btn" onclick="pick(${c.index},2,this)">✓ Добре</button>
+        <button class="btn partial-btn" onclick="pick(${c.index},1,this)">~ Частково</button>
+        <button class="btn bad-btn" onclick="pick(${c.index},0,this)">✗ Слабко</button>
+      </div>
+    </div>`;
+  });
+  content.appendChild(d);
 }
 
-function pts(a){return a.val==='ok'?a.w:a.val==='mid'?a.w*0.5:0;}
-
-function calc(){
-  var done=Object.keys(A).length;
-  var got=0;
-  Object.values(A).forEach(function(a){got+=pts(a);});
-  var pct=got/W;
-  var score=(pct*10).toFixed(1);
-
-  document.getElementById('pf').style.width=(done/10*100)+'%';
-  document.getElementById('pt').textContent=done+' / 10';
-
-  var ts=document.getElementById('topScore');
-  ts.textContent=score+' / 10';
-  ts.className='top-score '+(pct>=0.8?'g':pct>=0.5?'m':'b');
-
-  ['a','b','v','g'].forEach(function(bl){
-    var ids=BLKS[bl],mw=BLKW[bl],g=0,d=0;
-    ids.forEach(function(id){if(A[id]){g+=pts(A[id]);d++;}});
-    var el=document.getElementById('bp-'+bl);
-    if(!d){el.textContent='—';el.style.color='var(--hint)';return;}
-    var p=g/mw;
-    el.textContent=Math.round(p*100)+'%';
-    el.style.color=p>=0.8?'var(--ac)':p>=0.5?'var(--amb)':'var(--red)';
-  });
-
-  if(done>=10)showResult(score,pct);
-  else document.getElementById('resultBlock').style.display='none';
+function pick(idx,val,btn){
+  answers[idx]=val;
+  const par=btn.closest('.buttons');
+  par.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const cr=document.getElementById('crit-'+idx);
+  cr.style.background=val===2?'#f0fdf4':val===1?'#fefce8':'#fef2f2';
+  if(Object.keys(answers).length===criteria.length) showSummary();
 }
 
-function showResult(score,pct){
-  var rb=document.getElementById('resultBlock');
-  rb.style.display='block';
-  var cls=pct>=0.8?'g':pct>=0.5?'m':'b';
-  var lbl=pct>=0.8?'Сильний візит':pct>=0.5?'Базовий рівень':'Потребує відпрацювання';
-  var sub=pct>=0.8?'МП готовий до самостійної роботи':pct>=0.5?'Є чіткі зони розвитку':'Скрипти потрібно відпрацювати на ТВ';
-  document.getElementById('resNum').textContent=score;
-  document.getElementById('resNum').className='res-num '+cls;
-  document.getElementById('resLbl').textContent=lbl;
-  document.getElementById('resLbl').className='res-lbl '+cls;
-  document.getElementById('resSub').textContent=sub;
-  var bf=document.getElementById('barFill');
-  bf.style.width=(pct*100)+'%';
-  bf.style.background=pct>=0.8?'var(--ac-mid)':pct>=0.5?'var(--amb-mid)':'var(--red-mid)';
-  var gs=document.getElementById('gridSum');
-  gs.innerHTML='';
-  Object.keys(LBL).forEach(function(id){
-    if(!A[id])return;
-    var v=A[id].val,c=v==='ok'?'ok':v==='mid'?'mid':'bad';
-    var icon=v==='ok'?'✓':v==='mid'?'~':'✗';
-    var txt=v==='ok'?'ОК':v==='mid'?'Частково':'Слабко';
-    gs.innerHTML+='<div class="si '+c+'"><strong>'+LBL[id]+'</strong>'+icon+' '+txt+'</div>';
+function showSummary(){
+  let got=0;
+  Object.values(answers).forEach(v=>{if(v===2)got+=1;if(v===1)got+=0.5;});
+  const pct=got/criteria.length;
+  const sumEl=document.getElementById('summary');
+  sumEl.style.display='block';
+  document.getElementById('score').textContent=got.toFixed(1)+' / '+criteria.length;
+  const vEl=document.getElementById('verdict');
+  if(pct>=0.8){vEl.textContent='Сильний візит — МП готовий до самостійної роботи';vEl.className='verdict excellent';}
+  else if(pct>=0.55){vEl.textContent='Базовий рівень — є чіткі зони розвитку';vEl.className='verdict medium';}
+  else{vEl.textContent='Потребує відпрацювання скриптів';vEl.className='verdict weak';}
+  const rEl=document.getElementById('results');
+  rEl.innerHTML='';
+  const dEl=document.getElementById('development');
+  dEl.innerHTML='';
+  criteria.forEach((c,i)=>{
+    const txt=answers[i]===2?'✓ Добре':answers[i]===1?'~ Частково':'✗ Слабко';
+    rEl.innerHTML+=`<div class="result-item"><strong>${c.title}</strong> — ${txt}</div>`;
+    if(answers[i]!==2){
+      dEl.innerHTML+=`<div class="development"><strong>${c.title}</strong><br><br>${c.rec}</div>`;
+    }
   });
-  rb.scrollIntoView({behavior:'smooth',block:'start'});
+  sumEl.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-function gv(id){return(document.getElementById(id)||{}).value||'';}
-function send(){
-  var rm=gv('rm'),mp=gv('mp'),dt=gv('dt');
-  var sc=document.getElementById('topScore').textContent;
-  var lines=['ТВ-ОЦІНКА МП · ЕМПАТІ','РМ: '+rm+' | МП: '+mp+' | Дата: '+dt,'Загальна оцінка: '+sc,'','КРИТЕРІЇ:'];
-  Object.keys(LBL).forEach(function(id){
-    if(A[id]){var v=A[id].val;lines.push(LBL[id]+': '+(v==='ok'?'ОК':v==='mid'?'Частково':'Слабко'));}
+function sendEmail(){
+  let b='ОЦІНКА ТВ-ВІЗИТУ · ЕМПАТІ%0D%0A%0D%0A';
+  criteria.forEach((c,i)=>{
+    const t=answers[i]===2?'Добре':answers[i]===1?'Частково':'Слабко';
+    b+=`${c.title}: ${t}%0D%0A`;
   });
-  lines.push('','Що спрацювало: '+gv('ow'),'Що не спрацювало: '+gv('of'),'Фокус розвитку: '+gv('od'));
-  window.location.href='mailto:oleksii.shapravskyi@uf.ua?subject='+encodeURIComponent('ТВ-Оцінка МП Емпаті · '+mp+' · '+rm+' · '+dt)+'&body='+encodeURIComponent(lines.join('\n'));
-  document.querySelector('.btn-send').style.display='none';
-  document.getElementById('doneMsg').style.display='block';
+  b+='%0D%0АЗОНИ РОЗВИТКУ:%0D%0A';
+  criteria.forEach((c,i)=>{ if(answers[i]!==2) b+=`- ${c.rec}%0D%0A`; });
+  window.location.href=`mailto:oleksii.shapravskyi@uf.ua?subject=ТВ-Оцінка МП Емпаті&body=${b}`;
 }
 </script>
 </body>
