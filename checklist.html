@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Чек-лист ТВ-візиту</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;color:#1a1a1a;font-size:15px}
+.wrap{max-width:480px;margin:0 auto;padding:12px}
+h1{font-size:17px;font-weight:600;color:#1a1a1a;padding:12px 0 4px}
+.sub{font-size:12px;color:#888;margin-bottom:16px}
+.section{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:14px 16px;margin-bottom:10px}
+.sec-title{font-size:12px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.field{margin-bottom:10px}
+.field label{font-size:13px;color:#555;display:block;margin-bottom:4px}
+.field input,.field select{width:100%;font-size:15px;padding:9px 12px;border:1px solid #ddd;border-radius:8px;background:#fafafa;color:#1a1a1a;-webkit-appearance:none}
+.field input:focus,.field select:focus{outline:none;border-color:#3b82f6;background:#fff}
+.legend{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:5px;font-size:12px;color:#666}
+.leg-dot{width:9px;height:9px;border-radius:50%}
+.tabs{display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}
+.tab{padding:5px 12px;border-radius:7px;border:1px solid #ddd;font-size:13px;font-weight:500;cursor:pointer;background:#fafafa;color:#666;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.tab.active{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
+.crit-row{border-bottom:1px solid #f0f0f0;padding:10px 0}
+.crit-row:last-child{border-bottom:none}
+.crit-name{font-size:13px;color:#222;margin-bottom:8px;line-height:1.4}
+.score-row{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.sc-wrap{text-align:center}
+.sc-lbl{font-size:11px;color:#aaa;margin-bottom:3px}
+.sc-btn{width:100%;padding:7px 0;border:1px solid #ddd;border-radius:7px;background:#fafafa;color:#555;font-size:14px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .1s}
+.sc-btn:active{opacity:.7}
+.sc-btn.s0{background:#fff0f0;color:#c0392b;border-color:#f5c6c6}
+.sc-btn.s1{background:#fffbeb;color:#92400e;border-color:#fcd34d}
+.sc-btn.s2{background:#f0fdf4;color:#166534;border-color:#86efac}
+.avg-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0 0}
+.avg-lbl{font-size:14px;color:#555}
+.avg-val{font-size:22px;font-weight:700}
+.btn{width:100%;padding:13px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;-webkit-tap-highlight-color:transparent}
+.btn-xl{background:#16a34a;color:#fff}
+.btn-ml{background:#2563eb;color:#fff;margin-top:6px}
+.btn:active{opacity:.85}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Чек-лист ТВ-візиту</h1>
+  <div class="sub">ЮРіЯ-ФАРМ · Зовнішня служба</div>
+
+  <div class="section">
+    <div class="sec-title">Загальна інформація</div>
+    <div class="field"><label>ПІБ медичного представника</label><input type="text" id="mp_name" placeholder="Прізвище Ім'я По батькові"></div>
+    <div class="field">
+      <label>Досвід МП</label>
+      <select id="mp_exp">
+        <option value="">— оберіть —</option>
+        <option value="1">До 1 року</option>
+        <option value="2">1–2 роки</option>
+        <option value="3">Більше 2 років</option>
+      </select>
+    </div>
+    <div class="field"><label>ПІБ менеджера</label><input type="text" id="rm_name" placeholder="Прізвище Ім'я По батькові"></div>
+    <div class="field"><label>Дата</label><input type="date" id="visit_date"></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">Оцінка елементів візиту</div>
+    <div class="legend">
+      <div class="leg"><div class="leg-dot" style="background:#e74c3c"></div>0 — не виконано</div>
+      <div class="leg"><div class="leg-dot" style="background:#f59e0b"></div>1 — частково</div>
+      <div class="leg"><div class="leg-dot" style="background:#16a34a"></div>2 — повністю</div>
+    </div>
+    <div class="tabs" id="tabs"></div>
+    <div id="critList"></div>
+    <div class="avg-row">
+      <span class="avg-lbl">Середній бал по МП</span>
+      <span class="avg-val" id="avgVal">—</span>
+    </div>
+  </div>
+
+  <button class="btn btn-xl" onclick="exportXLS()">⬇ Зберегти Excel</button>
+  <button class="btn btn-ml" onclick="openMail()">✉ Відкрити Outlook</button>
+</div>
+
+<script>
+const CRIT=[
+  "Інформація про лікаря (потенціал, лояльність, історія роботи, прицинусні аптеки)",
+  "Постановка цілі за критеріями SMART",
+  "Відкриття візиту (представлення, small-talk)",
+  "Проведення контролю домовленості по пакету попереднього візиту",
+  "Формування/актуалізація потреби",
+  "Мотивуюча ціль",
+  "Використання CLM-презентації",
+  "Портрет пацієнта",
+  "ХПВ",
+  "Схема лікування",
+  "Робота з запереченнями",
+  "Укладання угоди",
+  "Післявізитний аналіз"
+];
+
+const sc={};
+for(let v=1;v<=7;v++) for(let c=0;c<CRIT.length;c++) sc[v+'_'+c]=null;
+let cur=1;
+
+// build tabs
+const tabsEl=document.getElementById('tabs');
+for(let v=1;v<=7;v++){
+  const t=document.createElement('div');
+  t.className='tab'+(v===1?' active':'');
+  t.textContent='В'+v;
+  t.onclick=(()=>{const n=v;return()=>setV(n)})();
+  tabsEl.appendChild(t);
+}
+
+function setV(n){
+  cur=n;
+  tabsEl.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===n-1));
+  render();
+}
+
+function setS(c,val){
+  sc[cur+'_'+c]=val;
+  render();
+  calcAvg();
+}
+
+function render(){
+  document.getElementById('critList').innerHTML=CRIT.map((name,c)=>{
+    const v=sc[cur+'_'+c];
+    const btns=[0,1,2].map(s=>`<div class="sc-wrap"><div class="sc-lbl">${s}</div><button class="sc-btn${v===s?' s'+s:''}" onclick="setS(${c},${s})">${s===0?'✗':s===1?'~':'✓'}</button></div>`).join('');
+    const reset=`<div class="sc-wrap"><div class="sc-lbl">—</div><button class="sc-btn" onclick="setS(${c},null)">—</button></div>`;
+    return`<div class="crit-row"><div class="crit-name">${c+1}. ${name}</div><div class="score-row">${btns}${reset}</div></div>`;
+  }).join('');
+}
+
+function calcAvg(){
+  let t=0,n=0;
+  for(let v=1;v<=7;v++) for(let c=0;c<CRIT.length;c++){const s=sc[v+'_'+c];if(s!==null){t+=s;n++;}}
+  const el=document.getElementById('avgVal');
+  if(!n){el.textContent='—';el.style.color='#aaa';return;}
+  const a=(t/n).toFixed(2);
+  el.textContent=a;
+  el.style.color=a>=1.5?'#16a34a':a>=1?'#d97706':'#dc2626';
+}
+
+function vAvg(v){
+  let t=0,n=0;
+  for(let c=0;c<CRIT.length;c++){const s=sc[v+'_'+c];if(s!==null){t+=s;n++;}}
+  return n?(t/n).toFixed(2):'-';
+}
+
+function exportXLS(){
+  const mp=document.getElementById('mp_name').value||'МП';
+  const exp={1:'до 1 року',2:'1–2 роки',3:'більше 2 років'}[document.getElementById('mp_exp').value]||'—';
+  const rm=document.getElementById('rm_name').value||'—';
+  const dt=document.getElementById('visit_date').value||new Date().toISOString().slice(0,10);
+  const wb=XLSX.utils.book_new();
+  const rows=[
+    ['Чек-лист оцінки подвійного візиту'],
+    [],
+    ['ПІБ МП',mp],['Досвід МП',exp],['ПІБ менеджера',rm],['Дата',dt],
+    [],
+    ['№','Критерій','В1','В2','В3','В4','В5','В6','В7','Середній бал']
+  ];
+  CRIT.forEach((name,c)=>{
+    const row=[c+1,name];
+    let t=0,n=0;
+    for(let v=1;v<=7;v++){const s=sc[v+'_'+c];row.push(s!==null?s:'');if(s!==null){t+=s;n++;}}
+    row.push(n?(t/n).toFixed(2):'-');
+    rows.push(row);
+  });
+  const sr=['','Середній бал по візиту'];
+  for(let v=1;v<=7;v++) sr.push(vAvg(v));
+  rows.push(sr);
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols']=[{wch:4},{wch:44},...Array(7).fill({wch:7}),{wch:14}];
+  XLSX.utils.book_append_sheet(wb,ws,'Чек-лист');
+  XLSX.writeFile(wb,`checklist_${mp.replace(/\s/g,'_')}_${dt}.xlsx`);
+}
+
+function openMail(){
+  const mp=document.getElementById('mp_name').value||'МП';
+  const rm=document.getElementById('rm_name').value||'—';
+  const dt=document.getElementById('visit_date').value||new Date().toISOString().slice(0,10);
+  let t=0,n=0;
+  for(let v=1;v<=7;v++) for(let c=0;c<CRIT.length;c++){const s=sc[v+'_'+c];if(s!==null){t+=s;n++;}}
+  const avg=n?(t/n).toFixed(2):'—';
+  const subj=encodeURIComponent(`Чек-лист ТВ-візиту — ${mp} — ${dt}`);
+  const body=encodeURIComponent(`МП: ${mp}\nМенеджер: ${rm}\nДата: ${dt}\nСередній бал: ${avg}\n\n(Детальна таблиця — у вкладеному Excel-файлі)`);
+  window.location.href=`mailto:oleksii.shapravskyi@uf.ua?subject=${subj}&body=${body}`;
+}
+
+document.getElementById('visit_date').value=new Date().toISOString().slice(0,10);
+render();
+</script>
+</body>
+</html>
