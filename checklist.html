@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Чек-лист ТВ-візиту</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;color:#1a1a1a;font-size:15px}
@@ -29,7 +28,7 @@ h1{font-size:17px;font-weight:600;color:#1a1a1a;padding:12px 0 4px}
 .score-row{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
 .sc-wrap{text-align:center}
 .sc-lbl{font-size:11px;color:#aaa;margin-bottom:3px}
-.sc-btn{width:100%;padding:7px 0;border:1px solid #ddd;border-radius:7px;background:#fafafa;color:#555;font-size:14px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .1s}
+.sc-btn{width:100%;padding:7px 0;border:1px solid #ddd;border-radius:7px;background:#fafafa;color:#555;font-size:14px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .sc-btn:active{opacity:.7}
 .sc-btn.s0{background:#fff0f0;color:#c0392b;border-color:#f5c6c6}
 .sc-btn.s1{background:#fffbeb;color:#92400e;border-color:#fcd34d}
@@ -38,9 +37,12 @@ h1{font-size:17px;font-weight:600;color:#1a1a1a;padding:12px 0 4px}
 .avg-lbl{font-size:14px;color:#555}
 .avg-val{font-size:22px;font-weight:700}
 .btn{width:100%;padding:13px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;-webkit-tap-highlight-color:transparent}
-.btn-xl{background:#16a34a;color:#fff}
-.btn-ml{background:#2563eb;color:#fff;margin-top:6px}
+.btn-send{background:#16a34a;color:#fff}
 .btn:active{opacity:.85}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;text-align:center;min-width:200px}
+.toast.show{opacity:1}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -55,9 +57,9 @@ h1{font-size:17px;font-weight:600;color:#1a1a1a;padding:12px 0 4px}
       <label>Досвід МП</label>
       <select id="mp_exp">
         <option value="">— оберіть —</option>
-        <option value="1">До 1 року</option>
-        <option value="2">1–2 роки</option>
-        <option value="3">Більше 2 років</option>
+        <option value="До 1 року">До 1 року</option>
+        <option value="1–2 роки">1–2 роки</option>
+        <option value="Більше 2 років">Більше 2 років</option>
       </select>
     </div>
     <div class="field"><label>ПІБ менеджера</label><input type="text" id="rm_name" placeholder="Прізвище Ім'я По батькові"></div>
@@ -79,11 +81,14 @@ h1{font-size:17px;font-weight:600;color:#1a1a1a;padding:12px 0 4px}
     </div>
   </div>
 
-  <button class="btn btn-xl" onclick="exportXLS()">⬇ Зберегти Excel</button>
-  <button class="btn btn-ml" onclick="openMail()">✉ Відкрити Outlook</button>
+  <button class="btn btn-send" id="sendBtn" onclick="sendData()">✓ Надіслати</button>
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzuxoXCoXKXq3_hlEQtVrbO94e-_6UzNhtQ1ATyQ_PR9pHVZsmBJEej9w3LfyNuIqZ7/exec';
+
 const CRIT=[
   "Інформація про лікаря (потенціал, лояльність, історія роботи, прицинусні аптеки)",
   "Постановка цілі за критеріями SMART",
@@ -104,7 +109,6 @@ const sc={};
 for(let v=1;v<=7;v++) for(let c=0;c<CRIT.length;c++) sc[v+'_'+c]=null;
 let cur=1;
 
-// build tabs
 const tabsEl=document.getElementById('tabs');
 for(let v=1;v<=7;v++){
   const t=document.createElement('div');
@@ -151,45 +155,61 @@ function vAvg(v){
   return n?(t/n).toFixed(2):'-';
 }
 
-function exportXLS(){
-  const mp=document.getElementById('mp_name').value||'МП';
-  const exp={1:'до 1 року',2:'1–2 роки',3:'більше 2 років'}[document.getElementById('mp_exp').value]||'—';
-  const rm=document.getElementById('rm_name').value||'—';
-  const dt=document.getElementById('visit_date').value||new Date().toISOString().slice(0,10);
-  const wb=XLSX.utils.book_new();
-  const rows=[
-    ['Чек-лист оцінки подвійного візиту'],
-    [],
-    ['ПІБ МП',mp],['Досвід МП',exp],['ПІБ менеджера',rm],['Дата',dt],
-    [],
-    ['№','Критерій','В1','В2','В3','В4','В5','В6','В7','Середній бал']
-  ];
-  CRIT.forEach((name,c)=>{
-    const row=[c+1,name];
-    let t=0,n=0;
-    for(let v=1;v<=7;v++){const s=sc[v+'_'+c];row.push(s!==null?s:'');if(s!==null){t+=s;n++;}}
-    row.push(n?(t/n).toFixed(2):'-');
-    rows.push(row);
-  });
-  const sr=['','Середній бал по візиту'];
-  for(let v=1;v<=7;v++) sr.push(vAvg(v));
-  rows.push(sr);
-  const ws=XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols']=[{wch:4},{wch:44},...Array(7).fill({wch:7}),{wch:14}];
-  XLSX.utils.book_append_sheet(wb,ws,'Чек-лист');
-  XLSX.writeFile(wb,`checklist_${mp.replace(/\s/g,'_')}_${dt}.xlsx`);
+function showToast(msg, dur=3000){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), dur);
 }
 
-function openMail(){
-  const mp=document.getElementById('mp_name').value||'МП';
-  const rm=document.getElementById('rm_name').value||'—';
-  const dt=document.getElementById('visit_date').value||new Date().toISOString().slice(0,10);
+function sendData(){
+  const mp=document.getElementById('mp_name').value.trim();
+  const rm=document.getElementById('rm_name').value.trim();
+  const dt=document.getElementById('visit_date').value;
+  const exp=document.getElementById('mp_exp').value;
+
+  if(!mp){showToast('⚠️ Введіть ПІБ МП');return;}
+  if(!rm){showToast('⚠️ Введіть ПІБ менеджера');return;}
+  if(!dt){showToast('⚠️ Оберіть дату');return;}
+
   let t=0,n=0;
   for(let v=1;v<=7;v++) for(let c=0;c<CRIT.length;c++){const s=sc[v+'_'+c];if(s!==null){t+=s;n++;}}
   const avg=n?(t/n).toFixed(2):'—';
-  const subj=encodeURIComponent(`Чек-лист ТВ-візиту — ${mp} — ${dt}`);
-  const body=encodeURIComponent(`МП: ${mp}\nМенеджер: ${rm}\nДата: ${dt}\nСередній бал: ${avg}\n\n(Детальна таблиця — у вкладеному Excel-файлі)`);
-  window.location.href=`mailto:oleksii.shapravskyi@uf.ua?subject=${subj}&body=${body}`;
+
+  const critAvgs=CRIT.map((_,c)=>{
+    let ct=0,cn=0;
+    for(let v=1;v<=7;v++){const s=sc[v+'_'+c];if(s!==null){ct+=s;cn++;}}
+    return cn?(ct/cn).toFixed(2):'-';
+  });
+
+  const row=[
+    new Date().toLocaleString('uk-UA'),
+    mp, exp, rm, dt,
+    vAvg(1),vAvg(2),vAvg(3),vAvg(4),vAvg(5),vAvg(6),vAvg(7),
+    avg,
+    ...critAvgs
+  ];
+
+  const btn=document.getElementById('sendBtn');
+  btn.innerHTML='<span class="spinner"></span> Надсилаємо...';
+  btn.disabled=true;
+
+  fetch(SHEET_URL, {
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(row)
+  })
+  .then(()=>{
+    showToast('✅ Дані збережено в Google Sheets!', 4000);
+    btn.innerHTML='✓ Надіслати';
+    btn.disabled=false;
+  })
+  .catch(()=>{
+    showToast('❌ Помилка. Перевірте інтернет.', 4000);
+    btn.innerHTML='✓ Надіслати';
+    btn.disabled=false;
+  });
 }
 
 document.getElementById('visit_date').value=new Date().toISOString().slice(0,10);
